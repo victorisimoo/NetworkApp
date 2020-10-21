@@ -113,7 +113,7 @@ public class UserBean {
 
     @Override
     public String toString() {
-        return username + "|" + name + "|" + lastName + "|" + password + "|" + birth + "|" + mail + "|" + phone + "|"+ status+"|"+ rolUser;
+        return username + "|" + name + "|" + lastName + "|" + password + "|" + birth + "|" + mail + "|" + phone + "|" + pathPhoto +"|" + status+"|"+ rolUser;
     }
     
     

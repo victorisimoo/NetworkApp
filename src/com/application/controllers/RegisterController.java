@@ -2,17 +2,12 @@ package com.application.controllers;
 
 import com.application.beans.UserBean;
 import com.application.system.Principal;
-import static java.awt.font.TextAttribute.WIDTH;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -73,7 +68,7 @@ public class RegisterController implements Initializable {
         newUser.setMail(txtMail.getText());
         newUser.setBirth(cldBirth.getValue().toString());
         newUser.setPhone(txtPhone.getText());
-        newUser.setPhone(txtPhoto.getText());
+        newUser.setPathPhoto(txtPhoto.getText());
         if(cmbType.getSelectionModel().getSelectedItem().equals("Administrador")){
             newUser.setRolUser(1);
         }else {
@@ -85,13 +80,12 @@ public class RegisterController implements Initializable {
             newUser.setStatus(0);
         }
         if(writeUser(newUser)){
-            //Ingresa correctamente.
+            escenarioPrincipal.ventanaLogin();
         }else {
             JOptionPane.showMessageDialog(null, "El usuario no fue agregado, intentelo de nuevo", "Registro fallido", JOptionPane.OK_OPTION);
         }
     }
      
-    
     public Boolean writeUser(UserBean userBean){
         try {
             File directory = new File("C:\\MEIA");
@@ -100,9 +94,11 @@ public class RegisterController implements Initializable {
             }
             File file = new File("C:\\MEIA\\usuarios.txt");
             if(file.exists()){
-                List<String> list = Files.readAllLines(Paths.get("C:\\MEIA\\usuarios.txt"));
-                list.add(list.size() - 1, userBean.toString());
-                Files.write(Paths.get("C:\\MEIA\\usuarios.txt"), list);
+                FileWriter fileWriter = new FileWriter(file, true);
+                PrintWriter printLine = new PrintWriter(fileWriter);
+                printLine.print(userBean.toString() + '\n');
+                printLine.close();
+                fileWriter.close();
                 return true;
             }else{
                 return false;
