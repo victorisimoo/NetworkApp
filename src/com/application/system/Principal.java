@@ -1,6 +1,8 @@
 package com.application.system;
 
+import com.application.controllers.AdminUserController;
 import com.application.controllers.LoginController;
+import com.application.controllers.NormalUserController;
 import com.application.controllers.RegisterController;
 import java.io.InputStream;
 import javafx.application.Application;
@@ -38,6 +40,24 @@ public class Principal extends Application {
             loginController.setEscenarioPrincipal(this);
         } catch (Exception e){
            e.printStackTrace();
+        }
+    }
+    
+    public void ventanaNormalUser(){
+        try {
+            NormalUserController normalUser = (NormalUserController) cambioEscena("NormalUser.fxml", 500, 400);
+            normalUser.setEscenarioPrincipal(this);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void ventanaAdminUser(){
+        try {
+            AdminUserController adminUser = (AdminUserController) cambioEscena("AdminUser.fxml", 500, 400);
+            adminUser.setEscenarioPrincipal(this);
+        }catch (Exception e ){
+            e.printStackTrace();
         }
     }
     

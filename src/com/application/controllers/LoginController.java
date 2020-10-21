@@ -55,7 +55,11 @@ public class LoginController implements Initializable {
         IllegalBlockSizeException, BadPaddingException{
         if(analyzeLoginUser(txtUser.getText(), String.valueOf(txtPassword.getText()))){
             Storage.Instance().actualUser = getCompleteUser(txtUser.getText());
-            System.out.println("Login exitoso");
+            if(Storage.Instance().actualUser.getRolUser() == 1){
+                escenarioPrincipal.ventanaAdminUser();
+            }else {
+                escenarioPrincipal.ventanaNormalUser();
+            }
         }else {
             //Creación de usuario número uno como admin
             System.out.println("Login NO exitoso");
