@@ -77,7 +77,7 @@ public class LoginController implements Initializable {
             file.createNewFile();
             return false; 
         }
-    }
+    } 
     
     private UserBean getCompleteUser(String username) throws FileNotFoundException, IOException{
         File file = new File("C:\\MEIA\\usuarios.txt");
