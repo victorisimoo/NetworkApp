@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="500.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="com.application.controllers.AddFriendsGroupController">
+   <children>
+      <Label layoutX="219.0" layoutY="71.0" text="Nombre del grupo:" />
+      <Label layoutX="218.0" layoutY="134.0" text="Nombre del amigo que desea agregar:" />
+      <TextField fx:id="txtGroup" layoutX="219.0" layoutY="89.0" />
+      <TextField fx:id="txtAddFriend" layoutX="219.0" layoutY="152.0" />
+      <TextField fx:id="txtDeleteFriend" layoutX="218.0" layoutY="271.0" />
+      <Label layoutX="218.0" layoutY="253.0" prefHeight="18.0" prefWidth="205.0" text="Nombre del amigo que desea eliminar" />
+      <Button fx:id="btnAdd" layoutX="222.0" layoutY="187.0" mnemonicParsing="false" style="-fx-background-color: #0095f6;" text="Agregar amigo" textFill="WHITE" />
+      <Button fx:id="btnDelete" layoutX="220.0" layoutY="304.0" mnemonicParsing="false" style="-fx-background-color: #0095f6;" text="Eliminar amigo" textFill="WHITE" />
+      <ImageView fitHeight="207.0" fitWidth="206.0" layoutX="14.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/Friends.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

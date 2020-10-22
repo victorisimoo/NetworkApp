@@ -3,7 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/ayalr/source/repos/NetworkApp/src/com/application/constructor/UserConstructor.java</file>
+            <file>file:/C:/Users/ayalr/source/repos/NetworkApp/src/com/application/system/Principal.java</file>
+            <file>file:/C:/Users/ayalr/source/repos/NetworkApp/src/com/application/controllers/AddFriendsGroupController.java</file>
+            <file>file:/C:/Users/ayalr/source/repos/NetworkApp/src/com/application/beans/UserBean.java</file>
+            <file>file:/C:/Users/ayalr/source/repos/NetworkApp/src/com/application/beans/Friends.java</file>
             <file>file:/C:/Users/ayalr/source/repos/NetworkApp/src/com/application/img/AppStore.png</file>
+            <file>file:/C:/Users/ayalr/source/repos/NetworkApp/src/com/application/system/Storage.java</file>
+            <file>file:/C:/Users/ayalr/source/repos/NetworkApp/src/com/application/controllers/AdminUserController.java</file>
+            <file>file:/C:/Users/ayalr/source/repos/NetworkApp/src/com/application/views/AddFriendsGroup.fxml</file>
+            <file>file:/C:/Users/ayalr/source/repos/NetworkApp/src/com/application/controllers/NormalUserController.java</file>
+            <file>file:/C:/Users/ayalr/source/repos/NetworkApp/src/com/application/controllers/LoginController.java</file>
+            <file>file:/C:/Users/ayalr/source/repos/NetworkApp/src/com/application/beans/Index.java</file>
+            <file>file:/C:/Users/ayalr/source/repos/NetworkApp/src/com/application/views/Login.fxml</file>
         </group>
     </open-files>
 </project-private>
