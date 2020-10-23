@@ -6,6 +6,8 @@
             <file>file:/C:/Users/victo/Documents/NetBeansProjects/NetworkApp/src/com/application/controllers/RegisterController.java</file>
             <file>file:/C:/Users/victo/Documents/NetBeansProjects/NetworkApp/src/com/application/controllers/LoginController.java</file>
             <file>file:/C:/Users/victo/Documents/NetBeansProjects/NetworkApp/src/com/application/system/Principal.java</file>
+            <file>file:/C:/Users/victo/Documents/NetBeansProjects/NetworkApp/src/com/application/controllers/NormalUserController.java</file>
+            <file>file:/C:/Users/victo/Documents/NetBeansProjects/NetworkApp/src/com/application/controllers/AdminUserController.java</file>
             <file>file:/C:/Users/victo/Documents/NetBeansProjects/NetworkApp/src/com/application/beans/UserBean.java</file>
         </group>
     </open-files>
