@@ -53,7 +53,7 @@ public class RegisterController implements Initializable {
     public Principal getEscenarioPrincipal() {
         return escenarioPrincipal;
     }
-
+    
     public void setEscenarioPrincipal(Principal escenarioPrincipal) {
         this.escenarioPrincipal = escenarioPrincipal;
     }

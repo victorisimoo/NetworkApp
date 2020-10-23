@@ -7,6 +7,7 @@ package com.application.controllers;
 
 import com.application.beans.Friends;
 import com.application.beans.Index;
+import com.application.beans.UserBean;
 import com.application.system.Principal;
 import com.application.system.Storage;
 import java.io.BufferedReader;
@@ -18,7 +19,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TextField;
 import javax.swing.JOptionPane;
 
 /**
@@ -28,6 +31,8 @@ import javax.swing.JOptionPane;
  */
 public class AddFriendsToGroupController implements Initializable {
     private Principal escenarioPrincipal;
+    @FXML private TextField txtAddFriend;
+    @FXML private TextField txtGroup;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -44,7 +49,6 @@ public class AddFriendsToGroupController implements Initializable {
     int initialD = 0;
     int registers = 0;
     public boolean ifExist(String user, String group) throws IOException {
-        UserConstructor userC = new UserConstructor();
             File usuario = new File("C:\\MEIA\\grupo_amigos_n.txt");
             if(usuario.exists()== true) {
                 FileReader LecturaArchivo;
@@ -85,7 +89,6 @@ public class AddFriendsToGroupController implements Initializable {
     
     public boolean addFriend(Friends newFriend){
         try{
-            UserConstructor userC = new UserConstructor();
             File MEIA = new File("C:\\MEIA");
             if (!MEIA.exists()) {
                 MEIA.mkdir();
@@ -94,7 +97,7 @@ public class AddFriendsToGroupController implements Initializable {
             if (!usuario.exists()) {
                 usuario.createNewFile();
             }
-            if(usuario.exists()== true && userC.getUserByUsername(newFriend.getUserFriend(), "")!= null) {
+            if(usuario.exists()== true && getCompleteUser(newFriend.getUserFriend())!= null) {
             FileReader LecturaArchivo;
                 LecturaArchivo = new FileReader(usuario);
                 BufferedReader LeerArchivo = new BufferedReader(LecturaArchivo);
@@ -315,4 +318,28 @@ public class AddFriendsToGroupController implements Initializable {
         
     }
     
+    private UserBean getCompleteUser(String username) throws FileNotFoundException, IOException{
+        File file = new File("C:\\MEIA\\usuarios.txt");
+         UserBean userNew = new UserBean();
+        FileReader reader = new FileReader(file);
+        BufferedReader bufferReader = new BufferedReader(reader);
+        String lineReader;
+        while((lineReader = bufferReader.readLine())!= null){
+            String parts[] = lineReader.split("\\|");
+            if(parts[0].equals(username)){
+                userNew.setUsername(parts[0]);
+                userNew.setName(parts[1]);
+                userNew.setLastName(parts[2]);
+                userNew.setPassword(parts[3]);
+                userNew.setBirth(parts[4]);
+                userNew.setMail(parts[5]);
+                userNew.setPhone(parts[6]);
+                userNew.setPathPhoto(parts[7]);
+                userNew.setStatus(Integer.parseInt(parts[8]));
+                userNew.setRolUser(Integer.parseInt(parts[9]));
+                return userNew;
+            }
+        }
+        return null;
+    }
 }

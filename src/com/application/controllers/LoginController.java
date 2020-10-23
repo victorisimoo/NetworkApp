@@ -56,7 +56,7 @@ public class LoginController implements Initializable {
         if(analyzeLoginUser(txtUser.getText(), String.valueOf(txtPassword.getText()))){
             Storage.Instance().actualUser = getCompleteUser(txtUser.getText());
             if(Storage.Instance().actualUser.getRolUser() == 1){
-                escenarioPrincipal.ventanaAdminUser();
+                escenarioPrincipal.ventanaNormalUser();
             }else {
                 escenarioPrincipal.ventanaNormalUser();
             }
