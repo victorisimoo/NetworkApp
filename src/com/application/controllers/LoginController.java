@@ -22,6 +22,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javax.swing.JOptionPane;
 
 /**
  * @author victorisimo
@@ -62,7 +63,7 @@ public class LoginController implements Initializable {
             }
         }else {
             //Creación de usuario número uno como admin
-            System.out.println("Login NO exitoso");
+            JOptionPane.showMessageDialog(null, "El usuario y la contraseña son incorrectos", "Login fallido", JOptionPane.OK_OPTION);
         }
     }
     
@@ -83,7 +84,7 @@ public class LoginController implements Initializable {
         }
     } 
     
-    private UserBean getCompleteUser(String username) throws FileNotFoundException, IOException{
+    public UserBean getCompleteUser(String username) throws FileNotFoundException, IOException{
         File file = new File("C:\\MEIA\\usuarios.txt");
          UserBean userNew = new UserBean();
         FileReader reader = new FileReader(file);

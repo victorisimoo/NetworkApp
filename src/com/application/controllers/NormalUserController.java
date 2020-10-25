@@ -44,4 +44,8 @@ public class NormalUserController implements Initializable {
         return escenarioPrincipal;
     }    
     
+    public void searUserVentana(){
+        escenarioPrincipal.ventanaSearch();
+    }
+    
 }

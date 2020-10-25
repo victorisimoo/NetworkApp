@@ -61,12 +61,12 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="303.0" layoutY="87.0" text="Seguidores">
+      <Label layoutX="317.0" layoutY="87.0" text="Seguidores">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="400.0" layoutY="87.0" text="Seguidos">
+      <Label layoutX="414.0" layoutY="87.0" text="Seguidos">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
@@ -78,14 +78,14 @@
       </Label>
       <Label fx:id="lblName22" layoutX="244.0" layoutY="169.0" text="Soy una persona muy amigable," />
       <Label fx:id="lblName221" layoutX="171.0" layoutY="189.0" text="Me gustan las tardes lluviosas, leer y el café." />
-      <Label layoutX="361.0" layoutY="117.0" text="Grupos">
+      <Label layoutX="375.0" layoutY="117.0" text="Grupos">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="lblSeguid" layoutX="325.0" layoutY="104.0" text="100" />
-      <Label fx:id="lblSegui" layoutX="416.0" layoutY="104.0" text="300" />
-      <Label fx:id="lblGrouups" layoutX="378.0" layoutY="133.0" text="4" />
+      <Label fx:id="lblSeguid" layoutX="339.0" layoutY="104.0" text="100" />
+      <Label fx:id="lblSegui" layoutX="430.0" layoutY="104.0" text="300" />
+      <Label fx:id="lblGrouups" layoutX="392.0" layoutY="133.0" text="4" />
       <Label layoutX="176.0" layoutY="250.0" text="Fecha de nacimiento:">
          <font>
             <Font name="System Bold" size="12.0" />
@@ -106,8 +106,8 @@
       </Label>
       <Hyperlink layoutX="70.0" layoutY="200.0" text="Cambiar" />
       <Button layoutX="434.0" layoutY="358.0" mnemonicParsing="false" text="Salir" />
-      <Button layoutX="328.0" layoutY="358.0" mnemonicParsing="false" text="Agregar amigo" />
-      <Button layoutX="225.0" layoutY="358.0" mnemonicParsing="false" text="Agregar grupo" />
+      <Button layoutX="328.0" layoutY="358.0" mnemonicParsing="false" onAction="#searUserVentana" style="-fx-background-color: #0095f6;" text="Agregar amigo" textFill="WHITE" />
+      <Button layoutX="225.0" layoutY="358.0" mnemonicParsing="false" style="-fx-background-color: #0095f6;" text="Agregar grupo" textFill="WHITE" />
       <TextArea fx:id="txtNotify" layoutX="316.0" layoutY="271.0" prefHeight="73.0" prefWidth="150.0" />
       <Label layoutX="324.0" layoutY="250.0" text="Notificaciones recientes">
          <font>
