@@ -1,6 +1,8 @@
 package com.application.system;
 
 import com.application.controllers.AdminUserController;
+import com.application.controllers.CreateGropusController;
+import com.application.controllers.GroupsController;
 import com.application.controllers.LoginController;
 import com.application.controllers.NormalUserController;
 import com.application.controllers.RegisterController;
@@ -65,6 +67,15 @@ public class Principal extends Application {
         try {
             RegisterController registerController = (RegisterController) cambioEscena("Register.fxml", 500, 400);
             registerController.setEscenarioPrincipal(this);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void ventanaCreateGroups(){
+        try {
+            GroupsController CreateGropusController = (GroupsController) cambioEscena("CreateGropus.fxml", 500, 400);
+            CreateGropusController.setEscenarioPrincipal(this);
         }catch (Exception e){
             e.printStackTrace();
         }
