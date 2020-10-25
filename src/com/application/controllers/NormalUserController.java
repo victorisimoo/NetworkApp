@@ -70,9 +70,9 @@ public class NormalUserController implements Initializable {
             for (FriendRequest request : requests) {
                 int reply = JOptionPane.showConfirmDialog(null, request.getUser() + " te ha enviado una solicitud de amistad", "Nueva solicitud de amistad", JOptionPane.YES_NO_OPTION);
                 if( reply == JOptionPane.YES_OPTION){
-                    //Acepta solicitud de amistad
+                    
                 }else {
-                    //Eliminar solicitud de amistad
+                    
                 }
             }
         }
@@ -84,8 +84,10 @@ public class NormalUserController implements Initializable {
         FileReader reader = new FileReader(file);
         BufferedReader bufferReader = new BufferedReader(reader);
         String lineReader;
+        int counter = 0;
         while((lineReader = bufferReader.readLine()) != null){
             String parts[] = lineReader.split("\\|");
+            counter++;
             if(parts[1].equals(username)){
                 request.setUser(parts[0]);
                 request.setUserFriend(parts[1]);
@@ -93,6 +95,8 @@ public class NormalUserController implements Initializable {
                 request.setDateRequest(parts[3]);
                 request.setUserRequest(parts[4]);
                 request.setStatus(Integer.parseInt(parts[5]));
+                request.setDocument(0);
+                request.setLine(counter);
                 requests.add(request);
                 request = new FriendRequest();
             }
@@ -105,8 +109,10 @@ public class NormalUserController implements Initializable {
         FileReader reader = new FileReader(file);
         BufferedReader bufferReader = new BufferedReader(reader);
         String lineReader;
+        int counter = 0;
         while((lineReader = bufferReader.readLine()) != null){
             String parts[] = lineReader.split("\\|");
+            counter++;
             if(parts[1].equals(username)){
                 request.setUser(parts[0]);
                 request.setUserFriend(parts[1]);
@@ -114,6 +120,8 @@ public class NormalUserController implements Initializable {
                 request.setDateRequest(parts[3]);
                 request.setUserRequest(parts[4]);
                 request.setStatus(Integer.parseInt(parts[5]));
+                request.setDocument(1);
+                request.setLine(counter);
                 requests.add(request);
                 request = new FriendRequest();
             }

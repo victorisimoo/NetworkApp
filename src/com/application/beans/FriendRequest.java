@@ -15,6 +15,8 @@ public class FriendRequest implements Comparable<FriendRequest>{
     private String dateRequest;
     private String userRequest;
     private int status;
+    private int line; 
+    private int document; //1 = friends, 0 = bitacore;
     
     public FriendRequest(){}
 
@@ -27,6 +29,23 @@ public class FriendRequest implements Comparable<FriendRequest>{
         this.status = status;
     }
 
+    public int getLine() {
+        return line;
+    }
+
+    public void setLine(int line) {
+        this.line = line;
+    }
+
+    public int getDocument() {
+        return document;
+    }
+
+    public void setDocument(int document) {
+        this.document = document;
+    }
+
+    
     public String getUser() {
         return user;
     }
