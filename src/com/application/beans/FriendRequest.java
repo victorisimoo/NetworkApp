@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * @author victorisimoo
  */
-public class FriendRequest {
+public class FriendRequest implements Comparable<FriendRequest>{
     
     private String user;
     private String  userFriend;
@@ -84,9 +84,19 @@ public class FriendRequest {
     public String getCompleteUser(){
         return toString();
     }
+    
+    public String getKeyRequest(){
+        return user + userFriend;
+    }
 
     @Override
     public String toString() {
         return user + "|" + userFriend + "|" + response + "|" + dateRequest + "|" + userRequest + "|" + status;
+    }
+
+    @Override
+    public int compareTo(FriendRequest arg0) {
+        String comparage = ((FriendRequest) arg0).getKeyRequest();
+        return this.getKeyRequest().compareTo(comparage);
     }
 }

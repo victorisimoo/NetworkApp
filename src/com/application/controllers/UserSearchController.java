@@ -17,7 +17,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -32,6 +31,7 @@ import javax.swing.JOptionPane;
  */
 public class UserSearchController implements Initializable {
     private Principal escenarioPrincipal;
+    private int organization;
     @FXML private TextField txtSearchUser;
     @FXML private Label lblError;
     @FXML private Label lblUsername;
@@ -41,6 +41,7 @@ public class UserSearchController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        organization = 3;
         this.pnUser.setVisible(false);
         lblError.setVisible(false);
 
@@ -78,7 +79,7 @@ public class UserSearchController implements Initializable {
             friendRequest.setDateRequest();
             friendRequest.setUserRequest(Storage.Instance().actualUser.getUsername());
             friendRequest.setStatus(1);
-            if(cantLinesFile() <= 3){
+            if(cantLinesFile() + 1 <= organization){
                 writeFriend(file, friendRequest);
                 updateDescriptorFriends();
                 JOptionPane.showMessageDialog(null, "La solicitud fue enviada con éxito", "Solicitud exitosa", JOptionPane.CLOSED_OPTION);
@@ -112,7 +113,20 @@ public class UserSearchController implements Initializable {
         printLine.print("fecha_creacion: " + dateNow()+ '\n');
         printLine.print("usuario_creacion: "+Storage.Instance().actualUser.getUsername()+ '\n');
         printLine.print("#_registros: " + cantLinesFile()+ '\n');
-        printLine.print("max_reorganización: " + 3 + '\n');
+        printLine.print("max_reorganización: " + organization + '\n');
+        printLine.close();
+        fileWriter.close();
+    }
+    
+    public void updateDescriptorFriendsFile() throws IOException{
+        File file_descriptor = new File("C:\\MEIA\\desc_bitacora_amigos.txt");
+        FileWriter fileWriter = new FileWriter(file_descriptor);
+        PrintWriter printLine = new PrintWriter(fileWriter);
+        
+        printLine.print("nombre_simbolico: desc_bitacora_amigos"+ '\n');
+        printLine.print("fecha_creacion: " + dateNow()+ '\n');
+        printLine.print("usuario_creacion: "+Storage.Instance().actualUser.getUsername()+ '\n');
+        printLine.print("#_registros: " + cantLinesFileFriends()+ '\n');
         printLine.close();
         fileWriter.close();
     }
@@ -141,6 +155,7 @@ public class UserSearchController implements Initializable {
             friendRequest.setUserRequest(parts[4]);
             friendRequest.setStatus(Integer.parseInt(parts[5]));
             friendRequestBitacore.add(friendRequest);
+            friendRequest = new FriendRequest();
         }
         clearFileFriendBitacore(file);
         addFriendsToFriendsFile(friendRequestBitacore);
@@ -148,11 +163,11 @@ public class UserSearchController implements Initializable {
     
     public void addFriendsToFriendsFile(ArrayList<FriendRequest> friendRequests) throws FileNotFoundException, IOException{
         File file = new File("C:\\MEIA\\amigos.txt");
-        FriendRequest friendRequest = new FriendRequest();
         FileReader reader = new FileReader(file);
         BufferedReader bufferReader = new BufferedReader(reader);
         String lineReader;
         while((lineReader = bufferReader.readLine()) != null ){
+            FriendRequest friendRequest = new FriendRequest();
             String parts[] = lineReader.split("\\|");
             friendRequest.setUser(parts[0]);
             friendRequest.setUserFriend(parts[1]);
@@ -161,8 +176,23 @@ public class UserSearchController implements Initializable {
             friendRequest.setUserRequest(parts[4]);
             friendRequest.setStatus(Integer.parseInt(parts[5]));
             friendRequests.add(friendRequest);
+            friendRequest = new FriendRequest();
         }
-        Collections.sort(friendRequests, Comparator.comparing((friendRequest1) -> friendRequest1.getCompleteUser()));
+        Collections.sort(friendRequests);
+        writeFriendsToFriendsFile(friendRequests);
+    }
+    
+    public void writeFriendsToFriendsFile(ArrayList<FriendRequest> friendRequests) throws IOException{
+        File file = new File("C:\\MEIA\\amigos.txt");
+        FileWriter fileWriter = new FileWriter(file, true);
+        PrintWriter printLine = new PrintWriter(fileWriter);
+        for (FriendRequest friendRequest : friendRequests) {
+            if(friendRequest.getStatus() != 0){
+                printLine.print(friendRequest.toString() + '\n');
+            }
+        }
+        printLine.close();
+        fileWriter.close();
     }
     
     
@@ -174,6 +204,15 @@ public class UserSearchController implements Initializable {
     
     public int cantLinesFile() throws FileNotFoundException, IOException{
         File file = new File("C:\\MEIA\\bitacora_amigo.txt");
+        FileReader fr = new FileReader(file);
+        BufferedReader bf = new BufferedReader(fr);
+        int cantLines = (int) bf.lines().count();
+        bf.close();
+        return cantLines;
+    }
+    
+    public int cantLinesFileFriends() throws FileNotFoundException, IOException{
+        File file = new File("C:\\MEIA\\bitacora_amigos.txt");
         FileReader fr = new FileReader(file);
         BufferedReader bf = new BufferedReader(fr);
         int cantLines = (int) bf.lines().count();
