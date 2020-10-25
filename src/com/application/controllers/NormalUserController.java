@@ -44,4 +44,7 @@ public class NormalUserController implements Initializable {
         return escenarioPrincipal;
     }    
     
+    public void AddToGroup(){
+        escenarioPrincipal.ventanaAddFriendsToGroup();
+    }
 }

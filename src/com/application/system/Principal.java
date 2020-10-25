@@ -1,5 +1,6 @@
 package com.application.system;
 
+import com.application.controllers.AddFriendsToGroupController;
 import com.application.controllers.AdminUserController;
 import com.application.controllers.LoginController;
 import com.application.controllers.NormalUserController;
@@ -38,6 +39,15 @@ public class Principal extends Application {
         try {
             LoginController loginController = (LoginController) cambioEscena("Login.fxml", 500, 400);
             loginController.setEscenarioPrincipal(this);
+        } catch (Exception e){
+           e.printStackTrace();
+        }
+    }
+    
+    public void ventanaAddFriendsToGroup(){
+        try {
+            AddFriendsToGroupController addToGroupController = (AddFriendsToGroupController) cambioEscena("AddFriendsToGroup.fxml", 500, 400);
+            addToGroupController.setEscenarioPrincipal(this);
         } catch (Exception e){
            e.printStackTrace();
         }

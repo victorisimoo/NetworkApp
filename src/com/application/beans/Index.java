@@ -78,5 +78,9 @@ public class Index {
     public void setStatus(Integer status){
         this.status = status;
     }
+    @Override
+    public String toString() {
+        return register + "|" + position + "|" + user + "|" + group + "|" + userFriend + "|" + nextPosition + "|" + status;
+    }
 }
 

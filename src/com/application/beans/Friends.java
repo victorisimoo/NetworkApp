@@ -61,4 +61,9 @@ public class Friends {
     public void setStatus(Integer status){
         this.status = status;
     } 
+    @Override
+    public String toString() {
+        return user + "|" + group + "|" + userFriend + "|" + dateTrans + "|" + status;
+    }
+    
 }

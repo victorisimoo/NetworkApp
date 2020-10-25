@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="500.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.controllers.NormalUserController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="500.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.controllers.NormalUserController">
    <children>
       <ImageView fx:id="imgProfile" fitHeight="126.0" fitWidth="113.0" layoutX="37.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -106,7 +106,7 @@
       </Label>
       <Hyperlink layoutX="70.0" layoutY="200.0" text="Cambiar" />
       <Button layoutX="434.0" layoutY="358.0" mnemonicParsing="false" text="Salir" />
-      <Button layoutX="328.0" layoutY="358.0" mnemonicParsing="false" text="Agregar amigo" />
+      <Button fx:id="btnAddFriend" layoutX="328.0" layoutY="358.0" mnemonicParsing="false" onAction="#AddToGroup" text="Agregar amigo" />
       <Button layoutX="225.0" layoutY="358.0" mnemonicParsing="false" text="Agregar grupo" />
       <TextArea fx:id="txtNotify" layoutX="316.0" layoutY="271.0" prefHeight="73.0" prefWidth="150.0" />
       <Label layoutX="324.0" layoutY="250.0" text="Notificaciones recientes">
