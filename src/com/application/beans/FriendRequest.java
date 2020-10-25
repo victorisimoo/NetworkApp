@@ -60,6 +60,10 @@ public class FriendRequest {
         Date date = new Date(System.currentTimeMillis());
         this.dateRequest = formatter.format(date);
     }
+    
+    public void setDateRequest(String date){
+        this.dateRequest= date;
+    }
 
     public String getUserRequest() {
         return userRequest;
@@ -76,13 +80,13 @@ public class FriendRequest {
     public void setStatus(int status) {
         this.status = status;
     }
+    
+    public String getCompleteUser(){
+        return toString();
+    }
 
     @Override
     public String toString() {
         return user + "|" + userFriend + "|" + response + "|" + dateRequest + "|" + userRequest + "|" + status;
     }
-    
-    
-    
-    
 }
