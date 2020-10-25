@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Scanner;
+import java.util.StringJoiner;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
@@ -92,11 +93,14 @@ public class AddFriendsToGroupController implements Initializable {
             JOptionPane.showMessageDialog(null, "El grupo ingresado no corresponde a un grupo creado por el usuario.", "Error al añadir amigo", JOptionPane.OK_OPTION);
         } else if (addFriend(newFriend)) {
             addToIndex(newFriend);
+            changeGroupNumber(txtGroup.getText(),true);
             escenarioPrincipal.ventanaNormalUser();
         }
-
     }
-
+    public void back(){
+        escenarioPrincipal.ventanaNormalUser();
+    }
+    
     public boolean addFriend(Friends newFriend) {
         try {
             File MEIA = new File("C:\\MEIA");
@@ -171,8 +175,7 @@ public class AddFriendsToGroupController implements Initializable {
             newIndex.setStatus(1);
             String[] split;
             Linea = LeerArchivo.readLine();
-            FileWriter fw = new FileWriter(index, false);
-            BufferedWriter bw = new BufferedWriter(fw);
+            
             int counter = 0;
             while (Linea != null) {
                 info[counter] = new Index();
@@ -185,7 +188,8 @@ public class AddFriendsToGroupController implements Initializable {
             sortIndex(newIndex, info, initialD - 1, initialD - 1, size, 0);
             writeInDescIndex(descIndice, Storage.Instance().actualUser.getUsername(), initialD, info);
             writeDescGroupF(descGrupo, Storage.Instance().actualUser.getUsername(), info);
-            
+            FileWriter fw = new FileWriter(index, false);
+            BufferedWriter bw = new BufferedWriter(fw);
             for (int i = 0; i < info.length; i++) {
                 bw.write(info[i].toString());
                 bw.newLine();
@@ -204,21 +208,21 @@ public class AddFriendsToGroupController implements Initializable {
         BufferedReader LeerArchivo = new BufferedReader(DescInit);
         String Line = "";
         Line = LeerArchivo.readLine();
-        FileWriter fw = new FileWriter(descIndice, false);
-        BufferedWriter bw = new BufferedWriter(fw);
-        String[] information = new String[10];
+        
+        String[] information = new String[5];
         Integer counter = 0;
         while (Line != null) {
+            information[counter] = new String();
             information[counter] = Line;
             counter++;
             Line = LeerArchivo.readLine();
         }
         if (counter == 0) {
-            information[3] = "fecha_modificacion:" + java.time.LocalDateTime.now();
-            information[4] = "usuario_modificacion:" + userName;
-            information[5] = "#_registros:0";
-            information[6] = "registros_activos:0";
-            information[7] = "registros_inactivos:0";
+            information[0] = "fecha_modificacion:" + java.time.LocalDateTime.now();
+            information[1] = "usuario_modificacion:" + userName;
+            information[2] = "#_registros:0";
+            information[3] = "registros_activos:0";
+            information[4] = "registros_inactivos:0";
         } else {
             Integer[] activeUser = new Integer[2];
             activeUsers(activeUser, info);
@@ -228,6 +232,9 @@ public class AddFriendsToGroupController implements Initializable {
             information[3] = "registros_activos:" + activeUser[1];
             information[4] = "registros_inactivos:" + activeUser[0];
         }
+        
+        FileWriter fw = new FileWriter(descIndice, false);
+        BufferedWriter bw = new BufferedWriter(fw);
         for (int i = 0; i < 5; i++) {
             bw.write(information[i]);
             bw.newLine();
@@ -255,6 +262,7 @@ public class AddFriendsToGroupController implements Initializable {
             newIndex.setNextPosition(position);
             newIndex.setPosition("1." + registers);
             indexI[size - 1] = newIndex;
+            initialD = newIndex.getRegister();
         } else {
             boolean inserted = false;
             String a = "";
@@ -496,6 +504,8 @@ public class AddFriendsToGroupController implements Initializable {
     }
     
     // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Delete friends to group">
     int deletePos = 0;
     public void deleteToGroup() throws IOException{
         readDescIndex();
@@ -505,8 +515,10 @@ public class AddFriendsToGroupController implements Initializable {
             changeStatus(info, deletePos - 1, initialD - 1);
             writeInFile(info);
             changeBlock(false);
+            changeGroupNumber(txtDeleteGroup.getText(),false);
             escenarioPrincipal.ventanaNormalUser();
         }
+        
     }
     
     public boolean friendExist(String user, String group, Index[] info) throws IOException {
@@ -621,25 +633,131 @@ public class AddFriendsToGroupController implements Initializable {
     }
     int activeReg = 0;
     public void reorganize() throws IOException{
+        File descIndice = new File("C:\\MEIA\\desc_indice_grupo.txt");
+        File descGrupo = new File("C:\\MEIA\\desc_grupo_amigos.txt");
         readDescIndex();
         changeBlock(true);
         Index[] info = new Index[registers];
         friendExist("", "", info);
-        newOrder(info);
+        info = newOrder(info, "" ,false);
+        writeInDescIndex(descIndice, Storage.Instance().actualUser.getUsername(), initialD, info);
+        writeDescGroupF(descGrupo, Storage.Instance().actualUser.getUsername(), info);
     }
     
-    public void newOrder(Index[] info) throws IOException{
+    public Index[] newOrder(Index[] info, String group, boolean option) throws IOException{
         Index[] newInfo = new Index[activeReg];
-        int initial = 0;
+        int initial = 1;
+        int inserted = 0;
+        registers = 1;
         for (int i = 0; i < info.length; i++) {
             if (info[i].getStatus() == 1) {
                 info[i].setNextPosition(0);
                 info[i].setRegister(0);
                 info[i].setPosition("");
-                sortIndex(info[i], newInfo, 0, initial, activeReg,0);
+                sortIndex(info[i], newInfo, initial -1, initial -1, inserted + 1,0);
+                initial = initialD;
+                inserted++;
+                registers++;
+            }
+            if (option) {
+                if (!info[i].getGroup().equals(group)) {
+                    info[i].setNextPosition(0);
+                    info[i].setRegister(0);
+                    info[i].setPosition("");
+                    sortIndex(info[i], newInfo, initial - 1, initial - 1, inserted + 1, 0);
+                    initial = initialD;
+                    inserted++;
+                    registers++;
+                }
             }
         }
+        registers--;
         writeInFile(newInfo);
+        return newInfo;
     }
     
+    public void changeGroupNumber(String group, boolean option) throws FileNotFoundException, IOException{
+        File usuario = new File("C:\\MEIA\\grupo.txt");
+        if (usuario.exists() == true) {
+            FileReader LecturaArchivo;
+            LecturaArchivo = new FileReader(usuario);
+            BufferedReader LeerArchivo = new BufferedReader(LecturaArchivo);
+            String Linea = "";
+            int cantGroup = cantGroup();
+            String[] info = new String[cantGroup];
+            Linea = LeerArchivo.readLine();
+            int counter = 0;
+            while (Linea != null) {
+                info[counter] = new String();
+                info[counter] = Linea;
+                counter++;
+                Linea = LeerArchivo.readLine();
+            }
+            FileWriter fw = new FileWriter(usuario, false);
+            BufferedWriter bw = new BufferedWriter(fw);
+            
+            for (int i = 0; i < info.length; i++) {
+                if (info[i].split("[|]")[1].equals(group)) {
+                    if (option) {
+                        int x = Integer.parseInt(info[i].split("[|]")[3]) + 1;
+                        String[] d = info[i].split("[|]");
+                        d[3] = Integer.toString(x);
+                        StringJoiner string = new StringJoiner("|");
+                        for (int j = 0; j < d.length; j++) {
+                            string.add(d[j]);
+                        }
+                        bw.write(string.toString());
+                        bw.newLine();
+                    }
+                    else{
+                        int x = Integer.parseInt(info[i].split("[|]")[3]) - 1;
+                        String[] d = info[i].split("[|]");
+                        d[3] = Integer.toString(x);
+                        StringJoiner string = new StringJoiner("|");
+                        for (int j = 0; j < d.length; j++) {
+                            string.add(d[j]);
+                        }
+                        bw.write(string.toString());
+                        bw.newLine();
+                    }
+                }
+                else{
+                    bw.write(info[i]);
+                    bw.newLine();
+                }
+                
+            }
+            bw.close();
+            LecturaArchivo.close();
+            LeerArchivo.close();
+        }
+    }
+    public int cantGroup() throws IOException{
+        File MEIA = new File("C:\\MEIA");
+        if (!MEIA.exists()) {
+            MEIA.mkdir();
+        }
+        File usuario = new File("C:\\MEIA\\desc_grupo.txt");
+        if (usuario.exists() == true) {
+            int groups = 0;
+            FileReader LecturaArchivo;
+            LecturaArchivo = new FileReader(usuario);
+            BufferedReader LeerArchivo = new BufferedReader(LecturaArchivo);
+            String Linea = "";
+            Integer counter = 0;
+            Linea = LeerArchivo.readLine();
+            while (Linea != null && counter < 10) {
+                if (counter == 6) {
+                    groups = Integer.parseInt(Linea.split(":")[1]);
+                }
+                counter++;
+                Linea = LeerArchivo.readLine();
+            }
+            LecturaArchivo.close();
+            LeerArchivo.close();
+            return groups;
+        }
+        return 0;
+    }
+    // </editor-fold>
 }

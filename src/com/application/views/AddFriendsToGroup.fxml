@@ -36,5 +36,6 @@
       <TextField fx:id="txtDeleteFriend" layoutX="293.0" layoutY="248.0" />
       <Button fx:id="btnDeleteToGroup" layoutX="319.0" layoutY="298.0" mnemonicParsing="false" onAction="#deleteToGroup" style="-fx-background-color: #0095f6;" text="Eliminar miembro" textFill="WHITE" />
       <Button fx:id="btnReorganize" layoutX="210.0" layoutY="348.0" mnemonicParsing="false" onAction="#reorganize" style="-fx-background-color: #0095f6;" text="Reorganizar" textFill="WHITE" />
+      <Button fx:id="btnBack" layoutX="415.0" layoutY="33.0" mnemonicParsing="false" onAction="#back" style="-fx-background-color: #0095f6;" text="Volver" textFill="WHITE" />
    </children>
 </AnchorPane>
