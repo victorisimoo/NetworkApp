@@ -86,7 +86,7 @@ public class LoginController implements Initializable {
     
     public UserBean getCompleteUser(String username) throws FileNotFoundException, IOException{
         File file = new File("C:\\MEIA\\usuarios.txt");
-         UserBean userNew = new UserBean();
+        UserBean userNew = new UserBean();
         FileReader reader = new FileReader(file);
         BufferedReader bufferReader = new BufferedReader(reader);
         String lineReader;
@@ -106,6 +106,8 @@ public class LoginController implements Initializable {
                 return userNew;
             }
         }
+        reader.close();
+        bufferReader.close();
         return null;
     }
     
@@ -123,6 +125,8 @@ public class LoginController implements Initializable {
                 return true;
             }
         }
+        reader.close();
+        bufferReader.close();
         return false;
     }
 }
