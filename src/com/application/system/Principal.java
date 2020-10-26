@@ -1,6 +1,10 @@
 package com.application.system;
 
+import com.application.controllers.AddFriendsToGroupController;
 import com.application.controllers.AdminUserController;
+import com.application.controllers.CreateGropusController;
+import com.application.controllers.DeleteGroupsController;
+import com.application.controllers.GroupsController;
 import com.application.controllers.LoginController;
 import com.application.controllers.NormalUserController;
 import com.application.controllers.RegisterController;
@@ -11,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -31,6 +36,7 @@ public class Principal extends Application {
     public void start(Stage escenarioPrincipal) {
         this.escenarioPrincipal = escenarioPrincipal;
         escenarioPrincipal.setTitle("Network App");
+        escenarioPrincipal.getIcons().add(new Image(Principal.class.getResourceAsStream("/com/application/img/instagram.png")));
         ventanaLogin();
         escenarioPrincipal.show();
     }
@@ -50,6 +56,15 @@ public class Principal extends Application {
             userSearch.setEscenarioPrincipal(this);
         }catch (Exception e){
             e.printStackTrace();
+        }
+    }
+    
+    public void ventanaAddFriendsToGroup(){
+        try {
+            AddFriendsToGroupController addToGroupController = (AddFriendsToGroupController) cambioEscena("AddFriendsToGroup.fxml", 500, 400);
+            addToGroupController.setEscenarioPrincipal(this);
+        } catch (Exception e){
+           e.printStackTrace();
         }
     }
     
@@ -75,6 +90,33 @@ public class Principal extends Application {
         try {
             RegisterController registerController = (RegisterController) cambioEscena("Register.fxml", 500, 400);
             registerController.setEscenarioPrincipal(this);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void ventanaGroups(){
+        try {
+            GroupsController GroupsController = (GroupsController) cambioEscena("Groups.fxml", 500, 400);
+            GroupsController.setEscenarioPrincipal(this);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void ventanaCreateGroups(){
+        try {
+            CreateGropusController CreateGropusController = (CreateGropusController) cambioEscena("CreateGropus.fxml", 500, 400);
+            CreateGropusController.setEscenarioPrincipal(this);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void ventanaDeleteGroups(){
+        try {
+            DeleteGroupsController DeleteGroupsController = (DeleteGroupsController) cambioEscena("DeleteGroups.fxml", 500, 400);
+            DeleteGroupsController.setEscenarioPrincipal(this);
         }catch (Exception e){
             e.printStackTrace();
         }

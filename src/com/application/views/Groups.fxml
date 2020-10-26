@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.controllers.GroupsController">
+   <children>
+      <Button fx:id="btnCreateGroups" layoutX="109.0" layoutY="75.0" mnemonicParsing="false" onAction="#createGroup" style="-fx-background-color: #0095f6;" text="Crear grupo" textFill="WHITE" />
+      <Button fx:id="btnDeleteGroups" layoutX="309.0" layoutY="75.0" mnemonicParsing="false" onAction="#deleteGroup" style="-fx-background-color: #0095f6;" text="Borrar grupo" textFill="WHITE" />
+      <Button layoutX="221.0" layoutY="160.0" mnemonicParsing="false" onAction="#openUser" style="-fx-background-color: #0095f6;" text="Back" textFill="WHITE" />
+   </children>
+</AnchorPane>
