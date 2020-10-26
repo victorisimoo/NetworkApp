@@ -16,7 +16,7 @@ public class FriendRequest implements Comparable<FriendRequest>{
     private String userRequest;
     private int status;
     private int line; 
-    private int document; //1 = friends, 0 = bitacore;
+    private int document;
     
     public FriendRequest(){}
 

@@ -71,6 +71,11 @@ public class UserSearchController implements Initializable {
         }
     }
     
+    public void analyzeSearchUser(String username){
+        
+    }
+    
+    
     public void addFriend() throws IOException{
         File file = new File("C:\\MEIA\\bitacora_amigo.txt");
         if(file.exists()){
