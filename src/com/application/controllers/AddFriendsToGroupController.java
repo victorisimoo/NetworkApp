@@ -18,17 +18,11 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Scanner;
 import java.util.StringJoiner;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javax.swing.JOptionPane;
 
@@ -44,6 +38,7 @@ public class AddFriendsToGroupController implements Initializable {
     @FXML private TextField txtGroup;
     @FXML private TextField txtDeleteFriend;
     @FXML private TextField txtDeleteGroup;
+    @FXML private Label lblMessage;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -56,10 +51,43 @@ public class AddFriendsToGroupController implements Initializable {
     public Principal geteEscenarioPrincipal() {
         return escenarioPrincipal;
     }
-    int initialD = 0;
-    int registers = 0;
+    
+    public void back() {
+        escenarioPrincipal.ventanaNormalUser();
+    }
 
     // <editor-fold defaultstate="collapsed" desc="Add friends to group">
+    int initialD = 0;
+    int registers = 0;
+    //Principal method to add members to group
+    public void addNewFriend() throws IOException {
+        Friends newFriend = new Friends();
+        newFriend.setUser(Storage.Instance().actualUser.getUsername());
+        newFriend.setDateTrans(java.time.LocalDateTime.now());
+        newFriend.setStatus(1);
+        newFriend.setUserFriend(txtAddFriend.getText());
+        newFriend.setGroup(txtGroup.getText());
+
+        if (ifExist(Storage.Instance().actualUser.getUsername(), txtGroup.getText(), txtAddFriend.getText())) {
+            JOptionPane.showMessageDialog(null, "El grupo ingresado no corresponde a un grupo creado por el usuario.");
+        } else if (getCompleteUser(newFriend.getUserFriend()) != null && ifGroupExist(txtGroup.getText())) {
+            if (addFriend(newFriend)) {
+                addToIndex(newFriend);
+                changeGroupNumber(txtGroup.getText(), true);
+                txtAddFriend.setText("");
+                txtGroup.setText("");
+                lblMessage.setText("El usuario se ha ingresado exitosamente");
+            }
+        }
+        else{
+            txtAddFriend.setText("");
+            txtGroup.setText("");
+            lblMessage.setText("El usuario no se ha ingresado, intentelo nuevamente.");
+        }
+    }
+    
+
+    //Check if user exist in some group
     public boolean ifExist(String user, String group, String userFriend) throws IOException {
         File usuario = new File("C:\\MEIA\\grupo_amigos_n.txt");
         if (usuario.exists() == true) {
@@ -80,27 +108,8 @@ public class AddFriendsToGroupController implements Initializable {
         }
         return false;
     }
-
-    public void addNewFriend() throws IOException {
-        Friends newFriend = new Friends();
-        newFriend.setUser(Storage.Instance().actualUser.getUsername());
-        newFriend.setDateTrans(java.time.LocalDateTime.now());
-        newFriend.setStatus(1);
-        newFriend.setUserFriend(txtAddFriend.getText());
-        newFriend.setGroup(txtGroup.getText());
-
-        if (ifExist(Storage.Instance().actualUser.getUsername(), txtGroup.getText(), txtAddFriend.getText())) {
-            JOptionPane.showMessageDialog(null, "El grupo ingresado no corresponde a un grupo creado por el usuario.", "Error al añadir amigo", JOptionPane.OK_OPTION);
-        } else if (addFriend(newFriend)) {
-            addToIndex(newFriend);
-            changeGroupNumber(txtGroup.getText(),true);
-            escenarioPrincipal.ventanaNormalUser();
-        }
-    }
-    public void back(){
-        escenarioPrincipal.ventanaNormalUser();
-    }
     
+    //Add friends in block and index
     public boolean addFriend(Friends newFriend) {
         try {
             File MEIA = new File("C:\\MEIA");
@@ -111,7 +120,7 @@ public class AddFriendsToGroupController implements Initializable {
             if (!usuario.exists()) {
                 usuario.createNewFile();
             }
-            if (usuario.exists() == true && getCompleteUser(newFriend.getUserFriend()) != null) {
+            if (usuario.exists() == true) {
                 FileReader LecturaArchivo;
                 LecturaArchivo = new FileReader(usuario);
                 BufferedReader LeerArchivo = new BufferedReader(LecturaArchivo);
@@ -138,11 +147,13 @@ public class AddFriendsToGroupController implements Initializable {
                 return true;
             }
             return false;
+            
         } catch (Exception ex) {
             return false;
         }
     }
 
+    //Add friend in index
     public void addToIndex(Friends newFriend) throws IOException {
         File index = new File("C:\\MEIA\\indice.txt");
         File descIndice = new File("C:\\MEIA\\desc_indice_grupo.txt");
@@ -202,6 +213,7 @@ public class AddFriendsToGroupController implements Initializable {
         }
     }
     
+    //Write blocks' group description
     public void writeDescGroupF(File descIndice, String userName, Index[] info) throws IOException {
         FileReader DescInit;
         DescInit = new FileReader(descIndice);
@@ -245,6 +257,7 @@ public class AddFriendsToGroupController implements Initializable {
         LeerArchivo.close();
     }
     
+    //Create new index objects
     public void AddInInfo(Index info, String Linea){
         String[] split = Linea.split("[|]");
         info.setRegister(Integer.parseInt(split[0]));
@@ -256,6 +269,7 @@ public class AddFriendsToGroupController implements Initializable {
         info.setStatus(Integer.parseInt(split[6]));
     }
 
+    //Method for sort index
     public void sortIndex(Index newIndex, Index[] indexI, int position, int initial, int size, int prev) {
         if (indexI[0] == null) {
             newIndex.setRegister(size);
@@ -385,7 +399,7 @@ public class AddFriendsToGroupController implements Initializable {
         }
     }
 
-    
+    //Read index' description
     public void readDescIndex() throws FileNotFoundException, IOException {
         File MEIA = new File("C:\\MEIA");
         if (!MEIA.exists()) {
@@ -478,6 +492,7 @@ public class AddFriendsToGroupController implements Initializable {
         }
     }
 
+    //Check if the user exist in usuarios.txt
     private UserBean getCompleteUser(String username) throws FileNotFoundException, IOException {
         File file = new File("C:\\MEIA\\usuarios.txt");
         UserBean userNew = new UserBean();
@@ -507,6 +522,7 @@ public class AddFriendsToGroupController implements Initializable {
     
     // <editor-fold defaultstate="collapsed" desc="Delete friends to group">
     int deletePos = 0;
+    //Principal method to delete user to group
     public void deleteToGroup() throws IOException{
         readDescIndex();
         Index[] info = new Index[registers];
@@ -514,13 +530,20 @@ public class AddFriendsToGroupController implements Initializable {
         if(friendExist(txtDeleteFriend.getText(), txtDeleteGroup.getText(), info)){
             changeStatus(info, deletePos - 1, initialD - 1);
             writeInFile(info);
-            changeBlock(false);
+            changeBlock(false, "");
             changeGroupNumber(txtDeleteGroup.getText(),false);
-            escenarioPrincipal.ventanaNormalUser();
+            txtDeleteFriend.setText("");
+            txtDeleteGroup.setText("");
+            lblMessage.setText("El usuario se ha eliminado exitosamente.");
         }
-        
+        else{
+            txtDeleteFriend.setText("");
+            txtDeleteGroup.setText("");
+            lblMessage.setText("El usuario no se ha eliminado, intentelo nuevamente.");
+        }
     }
     
+    //Check if friend exist in document
     public boolean friendExist(String user, String group, Index[] info) throws IOException {
         File usuario = new File("C:\\MEIA\\indice.txt");
         if (usuario.exists() == true) {
@@ -546,6 +569,7 @@ public class AddFriendsToGroupController implements Initializable {
         return false;
     }
     
+    //Change status in index
     public void changeStatus(Index[] info, int position, int initial){
         boolean delete = false;
         do {
@@ -568,6 +592,7 @@ public class AddFriendsToGroupController implements Initializable {
         } while (delete == false);
     }
     
+    //Write new index in file
     public void writeInFile(Index[]info) throws IOException{
         File index = new File("C:\\MEIA\\indice.txt");
         File descIndice = new File("C:\\MEIA\\desc_indice_grupo.txt");
@@ -583,7 +608,8 @@ public class AddFriendsToGroupController implements Initializable {
         }
     }
     
-    public void changeBlock(boolean option) throws IOException {
+    //Change status in users's block
+    public void changeBlock(boolean option, String group) throws IOException {
         File usuario = new File("C:\\MEIA\\grupo_amigos_n.txt");
         if (usuario.exists() == true) {
             FileReader LecturaArchivo;
@@ -621,6 +647,16 @@ public class AddFriendsToGroupController implements Initializable {
                 newLine = info[deletePos - 1].substring(0, size - 1) + "0";
                 info[deletePos - 1] = newLine;
             }
+            if (delete == 1) {
+                for (int i = 0; i < 10; i++) {
+                    if (info[i].split("[|]")[1].equals(group)) {
+                        String newLine = "";
+                        int size = info[i].length();
+                        newLine = info[i].substring(0, size - 1) + "0";
+                        info[i] = newLine;
+                    }
+                }
+            }
             
             for (int i = 0; i < info.length; i++) {
                 bw.write(info[i]);
@@ -632,11 +668,13 @@ public class AddFriendsToGroupController implements Initializable {
         }
     }
     int activeReg = 0;
+    
+    //Method for reorganize the index
     public void reorganize() throws IOException{
         File descIndice = new File("C:\\MEIA\\desc_indice_grupo.txt");
         File descGrupo = new File("C:\\MEIA\\desc_grupo_amigos.txt");
         readDescIndex();
-        changeBlock(true);
+        changeBlock(true, "");
         Index[] info = new Index[registers];
         friendExist("", "", info);
         info = newOrder(info, "" ,false);
@@ -644,6 +682,7 @@ public class AddFriendsToGroupController implements Initializable {
         writeDescGroupF(descGrupo, Storage.Instance().actualUser.getUsername(), info);
     }
     
+    //Change order in index
     public Index[] newOrder(Index[] info, String group, boolean option) throws IOException{
         Index[] newInfo = new Index[activeReg];
         int initial = 1;
@@ -676,6 +715,7 @@ public class AddFriendsToGroupController implements Initializable {
         return newInfo;
     }
     
+    //Change quantity of members group
     public void changeGroupNumber(String group, boolean option) throws FileNotFoundException, IOException{
         File usuario = new File("C:\\MEIA\\grupo.txt");
         if (usuario.exists() == true) {
@@ -732,6 +772,30 @@ public class AddFriendsToGroupController implements Initializable {
             LeerArchivo.close();
         }
     }
+    
+    //Check if group exist
+    public boolean ifGroupExist(String group) throws FileNotFoundException, IOException{
+        File usuario = new File("C:\\MEIA\\grupo.txt");
+        if (usuario.exists() == true) {
+            FileReader LecturaArchivo;
+            LecturaArchivo = new FileReader(usuario);
+            BufferedReader LeerArchivo = new BufferedReader(LecturaArchivo);
+            String Linea = "";
+            Linea = LeerArchivo.readLine();
+            while (Linea != null) {
+                if (Linea.split("[|]")[1].equals(group)) {
+                    return true;
+                }
+                Linea = LeerArchivo.readLine();
+            }
+            
+            LecturaArchivo.close();
+            LeerArchivo.close();
+        }
+        return false;
+    }
+    
+    //Number of groups
     public int cantGroup() throws IOException{
         File MEIA = new File("C:\\MEIA");
         if (!MEIA.exists()) {
@@ -759,5 +823,27 @@ public class AddFriendsToGroupController implements Initializable {
         }
         return 0;
     }
+    
+    int delete = 0;
+    //If delete group in GroupDelete
+    public void deleteGroupStatus(String group) throws IOException {
+        File descGrupo = new File("C:\\MEIA\\desc_grupo_amigos.txt");
+        readDescIndex();
+        Index[] info = new Index[registers];
+        
+        if(friendExist("", "", info)){
+            for (int i = 0; i < info.length; i++) {
+                if (info[i].getGroup().equals(group)) {
+                    changeStatus(info, info[i].getRegister() - 1, initialD - 1);
+                }
+            }
+            writeInFile(info);
+            writeDescGroupF(descGrupo, Storage.Instance().actualUser.getUsername(), info);
+            delete = 1;
+            changeBlock(false, group);
+            escenarioPrincipal.ventanaNormalUser();
+        }
+    }
+
     // </editor-fold>
 }
