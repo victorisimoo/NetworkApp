@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -34,8 +35,6 @@ public class NormalUserController implements Initializable {
     @FXML private DatePicker dtpCalendar;
     @FXML private TextArea txtNotify;
 
-    
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
@@ -50,7 +49,11 @@ public class NormalUserController implements Initializable {
         txtPhone.setText(Storage.Instance().actualUser.getPhone());
         dtpCalendar.setValue(LocalDate.now());
         txtNotify.disableProperty();
-        analyzeFriendsRequest();
+        try {
+            analyzeFriendsRequest();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public void setEscenarioPrincipal(Principal escenarioPrincipal){
@@ -65,14 +68,26 @@ public class NormalUserController implements Initializable {
         escenarioPrincipal.ventanaSearch();
     }
     
-    public void analyzeFriendsRequest(){
+    public void analyzeFriendsRequest() throws IOException{
         if(requests.size() > 0){
             for (FriendRequest request : requests) {
                 int reply = JOptionPane.showConfirmDialog(null, request.getUser() + " te ha enviado una solicitud de amistad", "Nueva solicitud de amistad", JOptionPane.YES_NO_OPTION);
                 if( reply == JOptionPane.YES_OPTION){
-                    
+                    if(request.getDocument() == 1){
+                        File file = new File("C:\\MEIA\\amigos.txt");
+                        changeRegisterInFile(request, file, 1);
+                    }else {
+                        File file = new File("C:\\MEIA\\bitacora_amigo.txt");
+                        changeRegisterInFile(request, file, 1);
+                    }
                 }else {
-                    
+                    if(request.getDocument() == 1){
+                        File file = new File("C:\\MEIA\\amigos.txt");
+                        changeRegisterInFile(request, file, 0);
+                    }else {
+                        File file = new File("C:\\MEIA\\bitacora_amigo.txt");
+                        changeRegisterInFile(request, file, 0);
+                    } 
                 }
             }
         }
@@ -128,9 +143,25 @@ public class NormalUserController implements Initializable {
         }
     }
     
-    public void changeRegisterInFile(FriendRequest friend, File file){
+    public void changeRegisterInFile(FriendRequest friend, File file, int response) throws FileNotFoundException, IOException{
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        String line = reader.readLine();
+        FileWriter writer = null;
+        String oldContent = "";
+        while(line != null){
+            oldContent = oldContent + line + System.lineSeparator();
+            line = reader.readLine();
+        }
+        FriendRequest newFriend = friend;
+        newFriend.setStatus(response);
+        newFriend.setResponse(1);
+        String newContent = oldContent.replaceAll(friend.toString(), newFriend.toString());
         
+        writer = new FileWriter(file);
+        writer.write(newContent);
         
+        reader.close();
+        writer.close();
     }
     
     
