@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.application.controllers;
 
 import com.application.beans.Friends;
@@ -24,12 +20,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
  *
- * @author ayalr
+ * @author AylinneRT
  */
 public class AddFriendsToGroupController implements Initializable {
 
@@ -48,13 +43,17 @@ public class AddFriendsToGroupController implements Initializable {
         this.escenarioPrincipal = escenarioPrincipal;
     }
 
-    public Principal geteEscenarioPrincipal() {
+    public Principal getEscenarioPrincipal() {
         return escenarioPrincipal;
     }
     
     public void back() {
         escenarioPrincipal.ventanaNormalUser();
     }
+    
+    RegisterController normal = new RegisterController();
+    
+    
 
     // <editor-fold defaultstate="collapsed" desc="Add friends to group">
     int initialD = 0;
@@ -67,16 +66,24 @@ public class AddFriendsToGroupController implements Initializable {
         newFriend.setStatus(1);
         newFriend.setUserFriend(txtAddFriend.getText());
         newFriend.setGroup(txtGroup.getText());
-
-        if (ifExist(Storage.Instance().actualUser.getUsername(), txtGroup.getText(), txtAddFriend.getText())) {
-            JOptionPane.showMessageDialog(null, "El grupo ingresado no corresponde a un grupo creado por el usuario.");
-        } else if (getCompleteUser(newFriend.getUserFriend()) != null && ifGroupExist(txtGroup.getText())) {
-            if (addFriend(newFriend)) {
-                addToIndex(newFriend);
-                changeGroupNumber(txtGroup.getText(), true);
+        
+        if (!"".equals(txtGroup.getText()) && !"".equals(txtAddFriend.getText())) {
+            if (ifExist(Storage.Instance().actualUser.getUsername(), txtGroup.getText(), txtAddFriend.getText())) {
                 txtAddFriend.setText("");
                 txtGroup.setText("");
-                lblMessage.setText("El usuario se ha ingresado exitosamente");
+                lblMessage.setText("El usuario ya fue ingresado al grupo, intentelo nuevamente.");
+            } else if (getCompleteUser(newFriend.getUserFriend()) != null && ifGroupExist(txtGroup.getText())) {
+                if (addFriend(newFriend)) {
+                    addToIndex(newFriend);
+                    changeGroupNumber(txtGroup.getText(), true);
+                    txtAddFriend.setText("");
+                    txtGroup.setText("");
+                    lblMessage.setText("El usuario se ha ingresado exitosamente");
+                }
+            } else {
+                txtAddFriend.setText("");
+                txtGroup.setText("");
+                lblMessage.setText("El usuario no se ha ingresado, intentelo nuevamente.");
             }
         }
         else{
@@ -84,6 +91,7 @@ public class AddFriendsToGroupController implements Initializable {
             txtGroup.setText("");
             lblMessage.setText("El usuario no se ha ingresado, intentelo nuevamente.");
         }
+        
     }
     
 
@@ -97,7 +105,7 @@ public class AddFriendsToGroupController implements Initializable {
             String Linea = "";
             Linea = LeerArchivo.readLine();
             while (Linea != null) {
-                if (Linea.split("|")[0].equalsIgnoreCase(user) && Linea.split("|")[1].equalsIgnoreCase(group) && Linea.split("|")[2].equalsIgnoreCase(userFriend)) {
+                if (Linea.split("[|]")[0].equalsIgnoreCase(user) && Linea.split("[|]")[1].equalsIgnoreCase(group) && Linea.split("[|]")[2].equalsIgnoreCase(userFriend)) {
                     return true;
                 }
                 Linea = LeerArchivo.readLine();
@@ -526,15 +534,21 @@ public class AddFriendsToGroupController implements Initializable {
     public void deleteToGroup() throws IOException{
         readDescIndex();
         Index[] info = new Index[registers];
-        
-        if(friendExist(txtDeleteFriend.getText(), txtDeleteGroup.getText(), info)){
-            changeStatus(info, deletePos - 1, initialD - 1);
-            writeInFile(info);
-            changeBlock(false, "");
-            changeGroupNumber(txtDeleteGroup.getText(),false);
-            txtDeleteFriend.setText("");
-            txtDeleteGroup.setText("");
-            lblMessage.setText("El usuario se ha eliminado exitosamente.");
+        if (!"".equals(txtDeleteGroup.getText()) && !"".equals(txtDeleteFriend.getText())) {
+            if (friendExist(txtDeleteFriend.getText(), txtDeleteGroup.getText(), info)) {
+                changeStatus(info, deletePos - 1, initialD - 1);
+                writeInFile(info);
+                changeBlock(false, "");
+                changeGroupNumber(txtDeleteGroup.getText(), false);
+                txtDeleteFriend.setText("");
+                txtDeleteGroup.setText("");
+                lblMessage.setText("El usuario se ha eliminado exitosamente.");
+            }
+            else {
+                txtDeleteFriend.setText("");
+                txtDeleteGroup.setText("");
+                lblMessage.setText("El usuario no se ha eliminado, intentelo nuevamente.");
+            }
         }
         else{
             txtDeleteFriend.setText("");
@@ -552,10 +566,12 @@ public class AddFriendsToGroupController implements Initializable {
             BufferedReader LeerArchivo = new BufferedReader(LecturaArchivo);
             String Linea = "";
             Linea = LeerArchivo.readLine();
+            boolean x = false;
             int counter = 0;
             while (Linea != null) {
                 if (Linea.split("[|]")[4].equalsIgnoreCase(user) && Linea.split("[|]")[3].equalsIgnoreCase(group)) {
                     deletePos = Integer.parseInt(Linea.split("[|]")[0]);
+                    x = true;
                 }
                 info[counter] = new Index();
                 AddInInfo(info[counter], Linea);
@@ -564,7 +580,12 @@ public class AddFriendsToGroupController implements Initializable {
             }
             LecturaArchivo.close();
             LeerArchivo.close();
-            return true;
+            if (x) {
+                return true;
+            }
+            else{
+                return false;
+            }
         }
         return false;
     }
