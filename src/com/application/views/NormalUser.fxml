@@ -105,15 +105,16 @@
          </font>
       </Label>
       <Hyperlink layoutX="70.0" layoutY="200.0" text="Cambiar" />
-      <Button layoutX="434.0" layoutY="358.0" mnemonicParsing="false" text="Salir" />
-      <Button fx:id="btnAddFriend" layoutX="328.0" layoutY="358.0" mnemonicParsing="false" onAction="#AddToGroup" text="Agregar amigo" />
-      <Button layoutX="225.0" layoutY="358.0" mnemonicParsing="false" text="Agregar grupo" />
+      <Button layoutX="446.0" layoutY="358.0" mnemonicParsing="false" text="Salir" />
+      <Button layoutX="343.0" layoutY="358.0" mnemonicParsing="false" text="Agregar amigo" />
+      <Button layoutX="245.0" layoutY="358.0" mnemonicParsing="false" text="Agregar grupo" />
       <TextArea fx:id="txtNotify" layoutX="316.0" layoutY="271.0" prefHeight="73.0" prefWidth="150.0" />
       <Label layoutX="324.0" layoutY="250.0" text="Notificaciones recientes">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Button layoutX="41.0" layoutY="358.0" mnemonicParsing="false" text="Guardar cambios" />
+      <Button layoutX="16.0" layoutY="358.0" mnemonicParsing="false" text="Guardar cambios" />
+      <Button fx:id="btnAddFriendToGroup" layoutX="129.0" layoutY="358.0" mnemonicParsing="false" onAction="#AddToGroup" text="Agregar miembro" />
    </children>
 </AnchorPane>
