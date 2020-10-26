@@ -6,21 +6,39 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.controllers.CreateGropusController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="500.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.controllers.CreateGropusController">
    <children>
-      <Button fx:id="btnCreate" layoutX="124.0" layoutY="256.0" mnemonicParsing="false" onAction="#Create" style="-fx-background-color: #0095f6;" text="Create" textFill="WHITE" />
-      <TextField fx:id="txtType" layoutX="75.0" layoutY="174.0" />
-      <Label layoutX="99.0" layoutY="148.0" text="Tipo De grupo" />
-      <Label fx:id="lblUser" layoutX="152.0" layoutY="96.0" text="Usuario" />
-      <Label layoutX="288.0" layoutY="148.0" text="Descripcion del grupo" />
-      <TextField fx:id="txtDescription" layoutX="272.0" layoutY="174.0" />
-      <ImageView fitHeight="46.0" fitWidth="142.0" layoutX="183.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+      <Button fx:id="btnCreate" layoutX="191.0" layoutY="284.0" mnemonicParsing="false" onAction="#Create" prefHeight="26.0" prefWidth="117.0" style="-fx-background-color: #0095f6;" text="Crear grupo" textFill="WHITE" />
+      <TextField fx:id="txtType" layoutX="77.0" layoutY="238.0" />
+      <Label layoutX="77.0" layoutY="213.0" text="Tipo de grupo" />
+      <Label fx:id="lblUser" layoutX="95.0" layoutY="145.0" text="Usuario" />
+      <Label layoutX="283.0" layoutY="213.0" text="Descripcion del grupo" />
+      <TextField fx:id="txtDescription" layoutX="283.0" layoutY="238.0" />
+      <ImageView fitHeight="75.0" fitWidth="208.0" layoutX="150.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/NetworkTitle.png" />
          </image>
       </ImageView>
-      <Label layoutX="75.0" layoutY="96.0" text="Bienvenid@:" />
-      <Button fx:id="btnBack" layoutX="254.0" layoutY="256.0" mnemonicParsing="false" onAction="#openGroups" style="-fx-background-color: #0095f6;" text="Back" textFill="WHITE" />
+      <Button fx:id="btnBack" layoutX="428.0" layoutY="346.0" mnemonicParsing="false" onAction="#openGroups" text="Volver" />
+      <Line endX="100.0" layoutX="370.0" layoutY="122.0" startX="-186.0" />
+      <Label fx:id="lblName211" layoutX="37.0" layoutY="112.0" text="Información personal">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="39.0" layoutY="145.0" text="Usuario:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Line endX="100.0" layoutX="372.0" layoutY="190.0" startX="-186.0" />
+      <Label fx:id="lblName2111" layoutX="39.0" layoutY="180.0" text="Agregar nuevo grupo">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
