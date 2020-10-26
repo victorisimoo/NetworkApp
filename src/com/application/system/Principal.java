@@ -2,9 +2,13 @@ package com.application.system;
 
 import com.application.controllers.AddFriendsToGroupController;
 import com.application.controllers.AdminUserController;
+import com.application.controllers.CreateGropusController;
+import com.application.controllers.DeleteGroupsController;
+import com.application.controllers.GroupsController;
 import com.application.controllers.LoginController;
 import com.application.controllers.NormalUserController;
 import com.application.controllers.RegisterController;
+import com.application.controllers.UserSearchController;
 import java.io.InputStream;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -44,6 +48,15 @@ public class Principal extends Application {
         }
     }
     
+    public void ventanaSearch(){
+        try {
+            UserSearchController userSearch = (UserSearchController) cambioEscena("UserSearch.fxml", 350, 350);
+            userSearch.setEscenarioPrincipal(this);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    
     public void ventanaAddFriendsToGroup(){
         try {
             AddFriendsToGroupController addToGroupController = (AddFriendsToGroupController) cambioEscena("AddFriendsToGroup.fxml", 500, 400);
@@ -75,6 +88,33 @@ public class Principal extends Application {
         try {
             RegisterController registerController = (RegisterController) cambioEscena("Register.fxml", 500, 400);
             registerController.setEscenarioPrincipal(this);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void ventanaGroups(){
+        try {
+            GroupsController GroupsController = (GroupsController) cambioEscena("Groups.fxml", 500, 400);
+            GroupsController.setEscenarioPrincipal(this);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void ventanaCreateGroups(){
+        try {
+            CreateGropusController CreateGropusController = (CreateGropusController) cambioEscena("CreateGropus.fxml", 500, 400);
+            CreateGropusController.setEscenarioPrincipal(this);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void ventanaDeleteGroups(){
+        try {
+            DeleteGroupsController DeleteGroupsController = (DeleteGroupsController) cambioEscena("DeleteGroups.fxml", 500, 400);
+            DeleteGroupsController.setEscenarioPrincipal(this);
         }catch (Exception e){
             e.printStackTrace();
         }

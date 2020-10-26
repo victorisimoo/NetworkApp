@@ -1,6 +1,5 @@
 
 package com.application.controllers;
-
 import com.application.beans.Friends;
 import com.application.beans.Index;
 import com.application.beans.UserBean;
