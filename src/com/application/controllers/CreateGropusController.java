@@ -65,7 +65,7 @@ public class CreateGropusController implements Initializable {
 
         if (Availability(txtType.getText()) && descriptionReturn(txtDescription.getText()) && descriptionReturn(txtType.getText())) {
             //aparicion de los message box
-            if (writeGroup(newGroup)) {
+            if (writeGroup(newGroup, lblUser.getText())) {
                 //impresion bitacora grupos
                 PrintBinnacle(lblUser.getText());
                 JOptionPane.showMessageDialog(null, "grupo creado correctamente", "Grupo creado", JOptionPane.OK_OPTION);
@@ -128,9 +128,48 @@ public class CreateGropusController implements Initializable {
         }
         fileWriter.close();
     }
+    
+    private void PrintBinnacleGroups(String user) throws IOException {
+        File file = new File("C:\\MEIA\\desc_grupo.txt");
+        if (!file.exists()) {
+            file.createNewFile();
+        }
+        ArrayList<String> ValueList = new ArrayList<>();
+        FileReader reader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(reader);
+        String line = bufferedReader.readLine();
+        while (line != null) {
+            String[] arrayTemp = line.split(":");
+            ValueList.add(arrayTemp[1]);
+            line = bufferedReader.readLine();
+        }
+        reader.close();
+        FileWriter fileWriter = new FileWriter(file, false);
+        if (ValueList.toArray().length == 0) {
+
+            fileWriter.write("nombre_simbolico:grupo" + '\n');
+            fileWriter.write("fecha_creacion:" + java.time.LocalDateTime.now() + '\n');
+            fileWriter.write("nombre_simbolico:" + user + '\n');
+            fileWriter.write("fecha_modificacion:" + java.time.LocalDateTime.now() + '\n');
+            fileWriter.write("usuario_modificacion:" + user + '\n');
+            fileWriter.write("#_registros:1" + '\n');
+            fileWriter.write("registros_activos:6" + '\n');
+            fileWriter.write("registros_activos:0" + '\n');
+        } else {
+            fileWriter.write("nombre_simbolico:desc_bitacora_grupo" + '\n');
+            fileWriter.write("fecha_creacion:" + ValueList.toArray()[1] + '\n');
+            fileWriter.write("usuario_creacion:" + ValueList.toArray()[2] + '\n');
+            fileWriter.write("fecha_modificacion:" + java.time.LocalDateTime.now() + '\n');
+            fileWriter.write("usuario_modificacion:" + user + '\n');
+            fileWriter.write("#_registros:" + Integer.toString(Integer.parseInt(ValueList.toArray()[5].toString()) + 6) + '\n');
+            fileWriter.write("registros_activos:" + ValueList.toArray()[6] + '\n');
+            fileWriter.write("registros_activos:" + ValueList.toArray()[7] + '\n');
+        }
+        fileWriter.close();
+    }
 
     //mandar a escribir el grupo
-    public Boolean writeGroup(GroupBean newGroup) {
+    public Boolean writeGroup(GroupBean newGroup, String User) {
         try {
             File file = new File("C:\\MEIA\\bitacora_grupo.txt");
 
@@ -163,6 +202,7 @@ public class CreateGropusController implements Initializable {
             //revision si la cantidad maxima de grupos esta en la lista
             if (ListGroups.toArray().length == 6) {
                 migrateGroups(ListGroups);
+                PrintBinnacleGroups(User);
             }
 
             //escritura del grupo nuevo
