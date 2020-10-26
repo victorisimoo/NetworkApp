@@ -1,5 +1,5 @@
-
 package com.application.controllers;
+
 import com.application.beans.Friends;
 import com.application.beans.Index;
 import com.application.beans.UserBean;
@@ -30,11 +30,16 @@ import javafx.scene.control.TextField;
 public class AddFriendsToGroupController implements Initializable {
 
     private Principal escenarioPrincipal;
-    @FXML private TextField txtAddFriend;
-    @FXML private TextField txtGroup;
-    @FXML private TextField txtDeleteFriend;
-    @FXML private TextField txtDeleteGroup;
-    @FXML private Label lblMessage;
+    @FXML
+    private TextField txtAddFriend;
+    @FXML
+    private TextField txtGroup;
+    @FXML
+    private TextField txtDeleteFriend;
+    @FXML
+    private TextField txtDeleteGroup;
+    @FXML
+    private Label lblMessage;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -47,7 +52,7 @@ public class AddFriendsToGroupController implements Initializable {
     public Principal getEscenarioPrincipal() {
         return escenarioPrincipal;
     }
-    
+
     public void back() {
         escenarioPrincipal.ventanaNormalUser();
     }
@@ -55,6 +60,7 @@ public class AddFriendsToGroupController implements Initializable {
     // <editor-fold defaultstate="collapsed" desc="Add friends to group">
     int initialD = 0;
     int registers = 0;
+
     //Principal method to add members to group
     public void addNewFriend() throws IOException {
         Friends newFriend = new Friends();
@@ -63,13 +69,13 @@ public class AddFriendsToGroupController implements Initializable {
         newFriend.setStatus(1);
         newFriend.setUserFriend(txtAddFriend.getText());
         newFriend.setGroup(txtGroup.getText());
-        
+
         if (!"".equals(txtGroup.getText()) && !"".equals(txtAddFriend.getText())) {
             if (ifExist(Storage.Instance().actualUser.getUsername(), txtGroup.getText(), txtAddFriend.getText())) {
                 txtAddFriend.setText("");
                 txtGroup.setText("");
                 lblMessage.setText("El usuario ya fue ingresado al grupo, intentelo nuevamente.");
-            } else if (getCompleteUser(newFriend.getUserFriend()) != null && ifGroupExist(txtGroup.getText(),txtAddFriend.getText() )) {
+            } else if (getCompleteUser(newFriend.getUserFriend()) != null && ifGroupExist(txtGroup.getText(), txtAddFriend.getText())) {
                 if (addFriend(newFriend)) {
                     addToIndex(newFriend);
                     changeGroupNumber(txtGroup.getText(), true);
@@ -82,15 +88,13 @@ public class AddFriendsToGroupController implements Initializable {
                 txtGroup.setText("");
                 lblMessage.setText("El usuario no se ha ingresado, intentelo nuevamente.");
             }
-        }
-        else{
+        } else {
             txtAddFriend.setText("");
             txtGroup.setText("");
             lblMessage.setText("El usuario no se ha ingresado, intentelo nuevamente.");
         }
-        
+
     }
-    
 
     //Check if user exist in some group
     public boolean ifExist(String user, String group, String userFriend) throws IOException {
@@ -102,7 +106,7 @@ public class AddFriendsToGroupController implements Initializable {
             String Linea = "";
             Linea = LeerArchivo.readLine();
             while (Linea != null) {
-                if (Linea.split("[|]")[0].equalsIgnoreCase(user) && Linea.split("[|]")[1].equalsIgnoreCase(group) && Linea.split("[|]")[2].equalsIgnoreCase(userFriend)) {
+                if (Linea.split("[|]")[0].equals(user) && Linea.split("[|]")[1].equals(group) && Linea.split("[|]")[2].equals(userFriend) && Linea.split("[|]")[4].equals("1")) {
                     return true;
                 }
                 Linea = LeerArchivo.readLine();
@@ -113,7 +117,7 @@ public class AddFriendsToGroupController implements Initializable {
         }
         return false;
     }
-    
+
     //Add friends in block and index
     public boolean addFriend(Friends newFriend) {
         try {
@@ -152,7 +156,7 @@ public class AddFriendsToGroupController implements Initializable {
                 return true;
             }
             return false;
-            
+
         } catch (Exception ex) {
             return false;
         }
@@ -191,7 +195,7 @@ public class AddFriendsToGroupController implements Initializable {
             newIndex.setStatus(1);
             String[] split;
             Linea = LeerArchivo.readLine();
-            
+
             int counter = 0;
             while (Linea != null) {
                 info[counter] = new Index();
@@ -217,7 +221,7 @@ public class AddFriendsToGroupController implements Initializable {
 
         }
     }
-    
+
     //Write blocks' group description
     public void writeDescGroupF(File descIndice, String userName, Index[] info) throws IOException {
         FileReader DescInit;
@@ -225,7 +229,7 @@ public class AddFriendsToGroupController implements Initializable {
         BufferedReader LeerArchivo = new BufferedReader(DescInit);
         String Line = "";
         Line = LeerArchivo.readLine();
-        
+
         String[] information = new String[5];
         Integer counter = 0;
         while (Line != null) {
@@ -249,7 +253,7 @@ public class AddFriendsToGroupController implements Initializable {
             information[3] = "registros_activos:" + activeUser[1];
             information[4] = "registros_inactivos:" + activeUser[0];
         }
-        
+
         FileWriter fw = new FileWriter(descIndice, false);
         BufferedWriter bw = new BufferedWriter(fw);
         for (int i = 0; i < 5; i++) {
@@ -261,9 +265,9 @@ public class AddFriendsToGroupController implements Initializable {
         DescInit.close();
         LeerArchivo.close();
     }
-    
+
     //Create new index objects
-    public void AddInInfo(Index info, String Linea){
+    public void AddInInfo(Index info, String Linea) {
         String[] split = Linea.split("[|]");
         info.setRegister(Integer.parseInt(split[0]));
         info.setPosition(split[1]);
@@ -331,73 +335,73 @@ public class AddFriendsToGroupController implements Initializable {
                     } else {
                         a = indexI[position].getGroup();
                         b = newIndex.getGroup();
-                            if (b.compareTo(a) < 0 && indexI[position].getStatus() == 1) {
-                                if (position == initial ) {
-                                    newIndex.setRegister(size);
-                                    newIndex.setNextPosition(indexI[position].getRegister());
-                                    position = newIndex.getRegister();
-                                    initialD = position;
-                                    newIndex.setPosition("1." + registers);
-                                    indexI[size - 1] = newIndex;
-                                    inserted = true;
-                                } else {
-                                    newIndex.setRegister(size);
-                                    newIndex.setNextPosition(indexI[prev].getNextPosition());
-                                    indexI[prev].setNextPosition(newIndex.getRegister());
-                                    newIndex.setPosition("1." + registers);
-                                    indexI[size - 1] = newIndex;
-                                    inserted = true;
-                                }
-                            } else if (b.compareTo(a) > 0 && indexI[position].getStatus() == 1) {
-                                if ((indexI[position].getNextPosition()) == 0) {
-                                    newIndex.setRegister(size);
-                                    newIndex.setNextPosition(0);
-                                    indexI[position].setNextPosition(newIndex.getRegister());
-                                    newIndex.setPosition("1." + registers);
-                                    indexI[size - 1] = newIndex;
-                                    inserted = true;
-                                } else {
-                                    prev = indexI[position].getRegister() - 1;
-                                    int aux = indexI[position].getNextPosition();
-                                    position = aux - 1;
-                                }
+                        if (b.compareTo(a) < 0 && indexI[position].getStatus() == 1) {
+                            if (position == initial) {
+                                newIndex.setRegister(size);
+                                newIndex.setNextPosition(indexI[position].getRegister());
+                                position = newIndex.getRegister();
+                                initialD = position;
+                                newIndex.setPosition("1." + registers);
+                                indexI[size - 1] = newIndex;
+                                inserted = true;
+                            } else {
+                                newIndex.setRegister(size);
+                                newIndex.setNextPosition(indexI[prev].getNextPosition());
+                                indexI[prev].setNextPosition(newIndex.getRegister());
+                                newIndex.setPosition("1." + registers);
+                                indexI[size - 1] = newIndex;
+                                inserted = true;
                             }
+                        } else if (b.compareTo(a) > 0 && indexI[position].getStatus() == 1) {
+                            if ((indexI[position].getNextPosition()) == 0) {
+                                newIndex.setRegister(size);
+                                newIndex.setNextPosition(0);
+                                indexI[position].setNextPosition(newIndex.getRegister());
+                                newIndex.setPosition("1." + registers);
+                                indexI[size - 1] = newIndex;
+                                inserted = true;
+                            } else {
+                                prev = indexI[position].getRegister() - 1;
+                                int aux = indexI[position].getNextPosition();
+                                position = aux - 1;
+                            }
+                        }
                     }
                 } else {
                     a = indexI[position].getUser();
                     b = newIndex.getUser();
                     if (b.compareTo(a) < 0 && indexI[position].getStatus() == 1) {
-                                if (position == initial) {
-                                    newIndex.setRegister(size);
-                                    newIndex.setNextPosition(indexI[position].getRegister());
-                                    position = newIndex.getRegister();
-                                    initialD = position;
-                                    newIndex.setPosition("1." + registers);
-                                    indexI[size - 1] = newIndex;
-                                    inserted = true;
-                                } else {
-                                    newIndex.setRegister(size);
-                                    newIndex.setNextPosition(indexI[prev].getNextPosition());
-                                    indexI[prev].setNextPosition(newIndex.getRegister());
-                                    newIndex.setPosition("1." + registers);
-                                    indexI[size - 1] = newIndex;
-                                    inserted = true;
-                                }
-                            } else if (b.compareTo(a) > 0 && indexI[position].getStatus() == 1) {
-                                if ((indexI[position].getNextPosition()) == 0) {
-                                    newIndex.setRegister(size);
-                                    newIndex.setNextPosition(0);
-                                    indexI[position].setNextPosition(newIndex.getRegister());
-                                    newIndex.setPosition("1." + registers);
-                                    indexI[size - 1] = newIndex;
-                                    inserted = true;
-                                } else {
-                                    prev = indexI[position].getRegister() - 1;
-                                    int aux = indexI[position].getNextPosition();
-                                    position = aux - 1;
-                                }
+                        if (position == initial) {
+                            newIndex.setRegister(size);
+                            newIndex.setNextPosition(indexI[position].getRegister());
+                            position = newIndex.getRegister();
+                            initialD = position;
+                            newIndex.setPosition("1." + registers);
+                            indexI[size - 1] = newIndex;
+                            inserted = true;
+                        } else {
+                            newIndex.setRegister(size);
+                            newIndex.setNextPosition(indexI[prev].getNextPosition());
+                            indexI[prev].setNextPosition(newIndex.getRegister());
+                            newIndex.setPosition("1." + registers);
+                            indexI[size - 1] = newIndex;
+                            inserted = true;
+                        }
+                    } else if (b.compareTo(a) > 0 && indexI[position].getStatus() == 1) {
+                        if ((indexI[position].getNextPosition()) == 0) {
+                            newIndex.setRegister(size);
+                            newIndex.setNextPosition(0);
+                            indexI[position].setNextPosition(newIndex.getRegister());
+                            newIndex.setPosition("1." + registers);
+                            indexI[size - 1] = newIndex;
+                            inserted = true;
+                        } else {
+                            prev = indexI[position].getRegister() - 1;
+                            int aux = indexI[position].getNextPosition();
+                            position = aux - 1;
+                        }
 
-                            }
+                    }
                 }
             } while (inserted == false);
 
@@ -425,7 +429,7 @@ public class AddFriendsToGroupController implements Initializable {
                 if (counter == 8) {
                     initialD = Integer.parseInt(Linea.split(":")[1]);
                 }
-                if(counter == 6){
+                if (counter == 6) {
                     activeReg = Integer.parseInt(Linea.split(":")[1]);
                 }
                 counter++;
@@ -488,10 +492,9 @@ public class AddFriendsToGroupController implements Initializable {
         activeUser[0] = 0;
         activeUser[1] = 0;
         for (int i = 0; i < info.length; i++) {
-            if(info[i].getStatus() == 0){
+            if (info[i].getStatus() == 0) {
                 activeUser[0]++;
-            }
-            else if(info[i].getStatus() == 1){
+            } else if (info[i].getStatus() == 1) {
                 activeUser[1]++;
             }
         }
@@ -522,40 +525,38 @@ public class AddFriendsToGroupController implements Initializable {
         }
         return null;
     }
-    
+
     // </editor-fold>
-    
     // <editor-fold defaultstate="collapsed" desc="Delete friends to group">
     int deletePos = 0;
+
     //Principal method to delete user to group
-    public void deleteToGroup() throws IOException{
+    public void deleteToGroup() throws IOException {
         readDescIndex();
         Index[] info = new Index[registers];
         if (!"".equals(txtDeleteGroup.getText()) && !"".equals(txtDeleteFriend.getText())) {
-            if (friendExist(txtDeleteFriend.getText(), txtDeleteGroup.getText(), info)) {
+            if (friendExist(txtDeleteFriend.getText(), txtDeleteGroup.getText(), info, false)) {
                 changeStatus(info, deletePos - 1, initialD - 1);
                 writeInFile(info);
-                changeBlock(false, "");
+                changeBlock(2, "");
                 changeGroupNumber(txtDeleteGroup.getText(), false);
                 txtDeleteFriend.setText("");
                 txtDeleteGroup.setText("");
                 lblMessage.setText("El usuario se ha eliminado exitosamente.");
-            }
-            else {
+            } else {
                 txtDeleteFriend.setText("");
                 txtDeleteGroup.setText("");
                 lblMessage.setText("El usuario no se ha eliminado, intentelo nuevamente.");
             }
-        }
-        else{
+        } else {
             txtDeleteFriend.setText("");
             txtDeleteGroup.setText("");
             lblMessage.setText("El usuario no se ha eliminado, intentelo nuevamente.");
         }
     }
-    
+
     //Check if friend exist in document
-    public boolean friendExist(String user, String group, Index[] info) throws IOException {
+    public boolean friendExist(String user, String group, Index[] info, boolean option) throws IOException {
         File usuario = new File("C:\\MEIA\\indice.txt");
         if (usuario.exists() == true) {
             FileReader LecturaArchivo;
@@ -566,10 +567,18 @@ public class AddFriendsToGroupController implements Initializable {
             boolean x = false;
             int counter = 0;
             while (Linea != null) {
-                if (Linea.split("[|]")[4].equalsIgnoreCase(user) && Linea.split("[|]")[3].equalsIgnoreCase(group)) {
-                    deletePos = Integer.parseInt(Linea.split("[|]")[0]);
-                    x = true;
+                if (option) {
+                    if (Linea.split("[|]")[3].equalsIgnoreCase(group)) {
+                        x = true;
+                    }
                 }
+                else{
+                    if (Linea.split("[|]")[4].equalsIgnoreCase(user) && Linea.split("[|]")[3].equalsIgnoreCase(group)) {
+                        deletePos = Integer.parseInt(Linea.split("[|]")[0]);
+                        x = true;
+                    }
+                }
+                
                 info[counter] = new Index();
                 AddInInfo(info[counter], Linea);
                 counter++;
@@ -579,16 +588,15 @@ public class AddFriendsToGroupController implements Initializable {
             LeerArchivo.close();
             if (x) {
                 return true;
-            }
-            else{
+            } else {
                 return false;
             }
         }
         return false;
     }
-    
+
     //Change status in index
-    public void changeStatus(Index[] info, int position, int initial){
+    public void changeStatus(Index[] info, int position, int initial) {
         boolean delete = false;
         do {
             if (info[initial].getNextPosition() == (position + 1)) {
@@ -596,22 +604,20 @@ public class AddFriendsToGroupController implements Initializable {
                 info[position].setNextPosition(0);
                 info[position].setStatus(0);
                 delete = true;
-            }
-            else if(info[position].getRegister()== initialD){
+            } else if (info[position].getRegister() == initialD) {
                 initialD = info[position].getNextPosition();
                 info[position].setNextPosition(0);
                 info[position].setStatus(0);
                 delete = true;
-            }
-            else{
+            } else {
                 int aux = info[initial].getNextPosition();
                 initial = aux - 1;
             }
         } while (delete == false);
     }
-    
+
     //Write new index in file
-    public void writeInFile(Index[]info) throws IOException{
+    public void writeInFile(Index[] info) throws IOException {
         File index = new File("C:\\MEIA\\indice.txt");
         File descIndice = new File("C:\\MEIA\\desc_indice_grupo.txt");
         if (index.exists()) {
@@ -625,9 +631,9 @@ public class AddFriendsToGroupController implements Initializable {
             bw.close();
         }
     }
-    
+
     //Change status in users's block
-    public void changeBlock(boolean option, String group) throws IOException {
+    public void changeBlock(int option, String group) throws IOException {
         File usuario = new File("C:\\MEIA\\grupo_amigos_n.txt");
         if (usuario.exists() == true) {
             FileReader LecturaArchivo;
@@ -636,13 +642,13 @@ public class AddFriendsToGroupController implements Initializable {
             String Linea = "";
             ArrayList<Friends> newFriend = new ArrayList<Friends>();
             String[] info = new String[registers];
-            if (option == true) {
+            if (option == 1) {
                 info = new String[activeReg];
             }
             Linea = LeerArchivo.readLine();
             int counter = 0;
             while (Linea != null) {
-                if(option == true){
+                if (option == 1) {
                     int x = Linea.length();
                     if (!"0".equals(Linea.split("[|]")[4])) {
                         Friends newFr = new Friends();
@@ -650,10 +656,9 @@ public class AddFriendsToGroupController implements Initializable {
                         newFriend.add(newFr);
                         counter++;
                     }
-                    
+
                     Linea = LeerArchivo.readLine();
-                }
-                else{
+                } else {
                     info[counter] = Linea;
                     counter++;
                     Linea = LeerArchivo.readLine();
@@ -661,7 +666,7 @@ public class AddFriendsToGroupController implements Initializable {
             }
             FileWriter fw = new FileWriter(usuario, false);
             BufferedWriter bw = new BufferedWriter(fw);
-            if (option == false) {
+            if (option == 2) {
                 String newLine = "";
                 int size = info[deletePos - 1].length();
                 newLine = info[deletePos - 1].substring(0, size - 1) + "0";
@@ -677,18 +682,28 @@ public class AddFriendsToGroupController implements Initializable {
                     }
                 }
             }
-            
-            if (option == true || delete == 1) {
+            if(option == 3){
+                for (int i = 0; i < info.length; i++) {
+                    if (info[i].split("[|]")[1].equals(group)) {
+                        String newLine = "";
+                        int size = info[i].length();
+                        newLine = info[i].substring(0, size - 1) + "0";
+                        info[i] = newLine;
+                    }
+                }
+                
+            }
+
+            if (option == 1 || delete == 1) {
                 Collections.sort(newFriend);
-                for(var item : newFriend){
+                for (var item : newFriend) {
                     bw.write(item.toString());
                     bw.newLine();
                 }
                 bw.close();
                 LecturaArchivo.close();
                 LeerArchivo.close();
-            }
-            else{
+            } else {
                 for (int i = 0; i < info.length; i++) {
                     bw.write(info[i]);
                     bw.newLine();
@@ -697,14 +712,12 @@ public class AddFriendsToGroupController implements Initializable {
                 LecturaArchivo.close();
                 LeerArchivo.close();
             }
-            
-            
+
         }
     }
     int activeReg = 0;
-    
-    
-    public Friends createFriendObject(String Linea){
+
+    public Friends createFriendObject(String Linea) {
         String[] split = Linea.split("[|]");
         Friends info = new Friends();
         info.setUser(split[0]);
@@ -714,22 +727,22 @@ public class AddFriendsToGroupController implements Initializable {
         info.setStatus(Integer.parseInt(split[4]));
         return info;
     }
-    
+
     //Method for reorganize the index
-    public void reorganize() throws IOException{
+    public void reorganize() throws IOException {
         File descIndice = new File("C:\\MEIA\\desc_indice_grupo.txt");
         File descGrupo = new File("C:\\MEIA\\desc_grupo_amigos.txt");
         readDescIndex();
-        changeBlock(true, "");
+        changeBlock(1, "");
         Index[] info = new Index[registers];
-        friendExist("", "", info);
-        info = newOrder(info, "" ,false);
+        friendExist("", "", info, false);
+        info = newOrder(info, "", false);
         writeInDescIndex(descIndice, Storage.Instance().actualUser.getUsername(), initialD, info);
         writeDescGroupF(descGrupo, Storage.Instance().actualUser.getUsername(), info);
     }
-    
+
     //Change order in index
-    public Index[] newOrder(Index[] info, String group, boolean option) throws IOException{
+    public Index[] newOrder(Index[] info, String group, boolean option) throws IOException {
         Index[] newInfo = new Index[activeReg];
         int initial = 1;
         int inserted = 0;
@@ -739,7 +752,7 @@ public class AddFriendsToGroupController implements Initializable {
                 info[i].setNextPosition(0);
                 info[i].setRegister(0);
                 info[i].setPosition("");
-                sortIndex(info[i], newInfo, initial -1, initial -1, inserted + 1,0);
+                sortIndex(info[i], newInfo, initial - 1, initial - 1, inserted + 1, 0);
                 initial = initialD;
                 inserted++;
                 registers++;
@@ -760,10 +773,10 @@ public class AddFriendsToGroupController implements Initializable {
         writeInFile(newInfo);
         return newInfo;
     }
-    
+
     //Change quantity of members group
-    public void changeGroupNumber(String group, boolean option) throws FileNotFoundException, IOException{
-        File usuario = new File("C:\\MEIA\\grupo.txt");
+    public void changeGroupNumber(String group, boolean option) throws FileNotFoundException, IOException {
+        File usuario = new File("C:\\MEIA\\bitacora_grupo.txt");
         if (usuario.exists() == true) {
             FileReader LecturaArchivo;
             LecturaArchivo = new FileReader(usuario);
@@ -772,17 +785,44 @@ public class AddFriendsToGroupController implements Initializable {
             int cantGroup = cantGroup();
             String[] info = new String[cantGroup];
             Linea = LeerArchivo.readLine();
+            boolean found = false;
             int counter = 0;
             while (Linea != null) {
+                if (Linea.split("[|]")[1].equals(group)) {
+                    found = true;
+                }
                 info[counter] = new String();
                 info[counter] = Linea;
                 counter++;
                 Linea = LeerArchivo.readLine();
             }
+
+            if (!found) {
+                usuario = new File("C:\\MEIA\\grupo.txt");
+                FileReader LecturaArchivo2;
+                LecturaArchivo2 = new FileReader(usuario);
+                BufferedReader LeerArchivo2 = new BufferedReader(LecturaArchivo2);
+                Linea = "";
+                cantGroup = cantGroup - counter;
+                info = new String[cantGroup];
+                Linea = LeerArchivo2.readLine();
+                counter = 0;
+                
+                while (Linea != null) {
+                    info[counter] = new String();
+                    info[counter] = Linea;
+                    counter++;
+                    Linea = LeerArchivo2.readLine();
+                }
+            }
+            else{
+                cantGroup = counter;
+            }
+            
             FileWriter fw = new FileWriter(usuario, false);
             BufferedWriter bw = new BufferedWriter(fw);
-            
-            for (int i = 0; i < info.length; i++) {
+
+            for (int i = 0; i < cantGroup; i++) {
                 if (info[i].split("[|]")[1].equals(group)) {
                     if (option) {
                         int x = Integer.parseInt(info[i].split("[|]")[3]) + 1;
@@ -794,8 +834,7 @@ public class AddFriendsToGroupController implements Initializable {
                         }
                         bw.write(string.toString());
                         bw.newLine();
-                    }
-                    else{
+                    } else {
                         int x = Integer.parseInt(info[i].split("[|]")[3]) - 1;
                         String[] d = info[i].split("[|]");
                         d[3] = Integer.toString(x);
@@ -806,51 +845,68 @@ public class AddFriendsToGroupController implements Initializable {
                         bw.write(string.toString());
                         bw.newLine();
                     }
-                }
-                else{
+                } else {
                     bw.write(info[i]);
                     bw.newLine();
                 }
-                
+
             }
             bw.close();
             LecturaArchivo.close();
             LeerArchivo.close();
         }
     }
-    
+
     //Check if group exist
-    public boolean ifGroupExist(String group, String user) throws FileNotFoundException, IOException{
-        File usuario = new File("C:\\MEIA\\grupo.txt");
+    public boolean ifGroupExist(String group, String user) throws FileNotFoundException, IOException {
+        File usuario = new File("C:\\MEIA\\bitacora_grupo.txt");
         if (usuario.exists() == true) {
             FileReader LecturaArchivo;
             LecturaArchivo = new FileReader(usuario);
             BufferedReader LeerArchivo = new BufferedReader(LecturaArchivo);
             String Linea = "";
             Linea = LeerArchivo.readLine();
+            int counter = 0;
             while (Linea != null) {
-                if (Linea.split("[|]")[0].equals(user) && Linea.split("[|]")[1].equals(group) ) {
+                if (Linea.split("[|]")[0].equals(user) && Linea.split("[|]")[1].equals(group)) {
                     return false;
                 }
                 if (Linea.split("[|]")[1].equals(group)) {
                     return true;
                 }
+                counter++;
                 Linea = LeerArchivo.readLine();
             }
-            
+            usuario = new File("C:\\MEIA\\grupo.txt");
             LecturaArchivo.close();
             LeerArchivo.close();
+            FileReader LecturaArchivo2;
+            LecturaArchivo2 = new FileReader(usuario);
+            BufferedReader LeerArchivo2 = new BufferedReader(LecturaArchivo2);
+            Linea = "";
+            Linea = LeerArchivo2.readLine();
+            while (Linea != null) {
+                if (Linea.split("[|]")[0].equals(user) && Linea.split("[|]")[1].equals(group)) {
+                    return false;
+                }
+                if (Linea.split("[|]")[1].equals(group)) {
+                    return true;
+                }
+                counter++;
+                Linea = LeerArchivo2.readLine();
+            }
+
         }
         return false;
     }
-    
+
     //Number of groups
-    public int cantGroup() throws IOException{
+    public int cantGroup() throws IOException {
         File MEIA = new File("C:\\MEIA");
         if (!MEIA.exists()) {
             MEIA.mkdir();
         }
-        File usuario = new File("C:\\MEIA\\desc_grupo.txt");
+        File usuario = new File("C:\\MEIA\\desc_bitacora_grupo.txt");
         if (usuario.exists() == true) {
             int groups = 0;
             FileReader LecturaArchivo;
@@ -872,15 +928,17 @@ public class AddFriendsToGroupController implements Initializable {
         }
         return 0;
     }
+
     
     int delete = 0;
+
     //If delete group in GroupDelete
     public void deleteGroupStatus(String group) throws IOException {
         File descGrupo = new File("C:\\MEIA\\desc_grupo_amigos.txt");
         readDescIndex();
         Index[] info = new Index[registers];
-        
-        if(friendExist("", "", info)){
+
+        if (friendExist("", group, info, true)) {
             for (int i = 0; i < info.length; i++) {
                 if (info[i].getGroup().equals(group)) {
                     changeStatus(info, info[i].getRegister() - 1, initialD - 1);
@@ -888,8 +946,8 @@ public class AddFriendsToGroupController implements Initializable {
             }
             writeInFile(info);
             writeDescGroupF(descGrupo, Storage.Instance().actualUser.getUsername(), info);
-            delete = 1;
-            changeBlock(false, group);
+            delete = 0;
+            changeBlock(3, group);
             escenarioPrincipal.ventanaNormalUser();
         }
     }
