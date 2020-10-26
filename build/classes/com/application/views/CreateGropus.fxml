@@ -3,17 +3,23 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="com.application.controllers.CreateGropusController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.controllers.CreateGropusController">
    <children>
-      <Button fx:id="btnCreate" layoutX="122.0" layoutY="320.0" mnemonicParsing="false" onAction="#Create" text="Create" />
-      <TextField fx:id="txtType" layoutX="74.0" layoutY="119.0" />
-      <Label layoutX="98.0" layoutY="93.0" text="Tipo De grupo" />
-      <Label fx:id="lblUser" layoutX="74.0" layoutY="31.0" text="Usuario" />
-      <Label layoutX="374.0" layoutY="93.0" text="Descripcion del grupo" />
-      <TextField fx:id="txtDescription" layoutX="358.0" layoutY="119.0" />
-      <Label fx:id="lblAvailability" layoutX="80.0" layoutY="154.0" text="disponible?" />
+      <Button fx:id="btnCreate" layoutX="122.0" layoutY="320.0" mnemonicParsing="false" onAction="#Create" style="-fx-background-color: #0095f6;" text="Create" textFill="WHITE" />
+      <TextField fx:id="txtType" layoutX="75.0" layoutY="174.0" />
+      <Label layoutX="99.0" layoutY="148.0" text="Tipo De grupo" />
+      <Label fx:id="lblUser" layoutX="152.0" layoutY="96.0" text="Usuario" />
+      <Label layoutX="288.0" layoutY="148.0" text="Descripcion del grupo" />
+      <TextField fx:id="txtDescription" layoutX="272.0" layoutY="174.0" />
+      <ImageView fitHeight="46.0" fitWidth="142.0" layoutX="183.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/NetworkTitle.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="75.0" layoutY="96.0" text="Bienvenid@:" />
    </children>
 </AnchorPane>
