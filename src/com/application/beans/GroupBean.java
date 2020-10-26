@@ -81,7 +81,7 @@ public class GroupBean implements Comparable<GroupBean>{
     public String toString() {
         return user + "|" + type + "|" + description + "|" + cero + "|" + birth + "|" + user + "|" + status;
     }
-
+    
     @Override
     public int compareTo(GroupBean arg0) {
         String comparage = ((GroupBean) arg0).getKey();

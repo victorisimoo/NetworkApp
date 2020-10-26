@@ -69,6 +69,10 @@ public class NormalUserController implements Initializable {
         escenarioPrincipal.ventanaSearch();
     }
     
+    public void openGroups(){
+        escenarioPrincipal.ventanaGroups();
+    }
+    
     public void analyzeFriendsRequest() throws IOException{
         if(requests.size() > 0){
             for (FriendRequest request : requests) {
