@@ -221,4 +221,17 @@ public class NormalUserController implements Initializable {
     public void AddToGroup(){
         escenarioPrincipal.ventanaAddFriendsToGroup();
     }
+    
+    public void reorganize() throws IOException{
+        AddFriendsToGroupController addFriendsG = new AddFriendsToGroupController();
+        CreateGropusController createGropus = new CreateGropusController();
+        UserSearchController userSearch = new UserSearchController();
+        userSearch.readFriendsToFriendsBitacore();
+        userSearch.updateDescriptorFriendsFile();
+        addFriendsG.reorganize();
+        createGropus.reorganizationExit();
+        System.exit(0);
+    }
+    
+    
 }

@@ -106,7 +106,7 @@
       </Label>
       <Hyperlink layoutX="70.0" layoutY="200.0" text="Cambiar" />
 
-      <Button layoutX="434.0" layoutY="358.0" mnemonicParsing="false" text="Salir" />
+      <Button fx:id="btnSalir" layoutX="434.0" layoutY="358.0" mnemonicParsing="false" onAction="#reorganize" text="Salir" />
       <Button layoutX="328.0" layoutY="358.0" mnemonicParsing="false" onAction="#searchUserVentana" style="-fx-background-color: #0095f6;" text="Agregar amigo" textFill="WHITE" />
       <Button fx:id="btnGroups" layoutX="225.0" layoutY="358.0" mnemonicParsing="false" onAction="#openGroups" style="-fx-background-color: #0095f6;" text="Agregar grupo" textFill="WHITE" />
 
