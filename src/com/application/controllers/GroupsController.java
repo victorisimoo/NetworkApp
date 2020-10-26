@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 
-/**
+/*
  * @author josed
  */
 public class GroupsController implements Initializable {
@@ -26,12 +26,12 @@ public class GroupsController implements Initializable {
         return escenarioPrincipal;
     }
 
-    /*public void createGroup(){
-        escenarioPrincipal.ventanaCreateGropusController();
+    public void createGroup(){
+        escenarioPrincipal.ventanaCreateGroups();
     }
     
     public void deleteGroup(){
-        escenarioPrincipal.ventanadeleteGroupsController();
-    }*/
+        escenarioPrincipal.ventanaDeleteGroups();
+    }
     
 }

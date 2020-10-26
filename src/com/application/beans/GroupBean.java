@@ -4,13 +4,15 @@ package com.application.beans;
 /**
  * @author josed
  */
-public class GroupBean {
+public class GroupBean implements Comparable<GroupBean>{
+    
     private String user;
     private String type;
     private String description;
     private String cero;
     private String birth;
     private String status;
+    private String key;
     
     public GroupBean(){}
     
@@ -71,7 +73,18 @@ public class GroupBean {
         this.status = status;
     }
     
-    public String printTXT() {
+    public String getKey() {
+        return user + type;
+    }
+    
+    @Override
+    public String toString() {
         return user + "|" + type + "|" + description + "|" + cero + "|" + birth + "|" + user + "|" + status;
+    }
+
+    @Override
+    public int compareTo(GroupBean arg0) {
+        String comparage = ((GroupBean) arg0).getKey();
+        return this.getKey().compareTo(comparage);
     }
 }

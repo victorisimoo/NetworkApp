@@ -21,6 +21,7 @@ import javafx.scene.control.TextField;
 /*
  * @author josed
  */
+
 public class DeleteGroupsController implements Initializable {
     
     private Principal escenarioPrincipal;
@@ -29,17 +30,24 @@ public class DeleteGroupsController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
     }    
+    
+    public void setEscenarioPrincipal(Principal escenarioPrincipal){
+        this.escenarioPrincipal = escenarioPrincipal;
+    }
+    
+    public Principal geteEscenarioPrincipal(){
+        return escenarioPrincipal;
+    }
     
     public void deleteMethod() throws IOException{
         String text = lblUser.getText() + txtGroup.getText();
-        deleteGropus("C:\\MEIA\\bitacora_grupo.txt", text);
-        deleteGropus("C:\\MEIA\\grupo.txt", text);
+        deleteGropus("C:\\MEIA\\bitacora_grupo.txt", text, lblUser.getText());
+        deleteGropus("C:\\MEIA\\grupo.txt", text, lblUser.getText());
     }
     
     //eliminar un grupo
-    public void deleteGropus(String directory, String groupName) throws FileNotFoundException, IOException{
+    public void deleteGropus(String directory, String groupName, String user) throws FileNotFoundException, IOException{
         File file = new File(directory);
         FileReader reader = new FileReader(file);
         BufferedReader bufferedReader = new BufferedReader(reader);
@@ -62,7 +70,7 @@ public class DeleteGroupsController implements Initializable {
             
             String Temp = listText.toArray()[i].toString();
             
-            String[] TempArray = Temp.split("|");
+            String[] TempArray = Temp.split("[|]");
             
             if (TempArray[0]+TempArray[1] == groupName) {
                 exists = true;
@@ -72,7 +80,10 @@ public class DeleteGroupsController implements Initializable {
                 TempGroup.setCero(TempArray[3]);
                 TempGroup.setBirth(TempArray[4]);
                 TempGroup.setStatus("0");
+                i = listText.toArray().length;
                 writeDeleteGroups(TempGroup, directory);
+                PrintBinnacle(user);
+                
             }
             else{
                 TempGroup.setUser(TempArray[0]);
@@ -80,10 +91,40 @@ public class DeleteGroupsController implements Initializable {
                 TempGroup.setDescription(TempArray[2]);
                 TempGroup.setCero(TempArray[3]);
                 TempGroup.setBirth(TempArray[4]);
-                TempGroup.setStatus(TempArray[5]);
+                TempGroup.setStatus(TempArray[6]);
                 writeDeleteGroups(TempGroup, directory);
             }
         }
+    }
+    
+    private void PrintBinnacle(String user) throws IOException{
+        File file = new File("C:\\MEIA\\desc_bitacora_grupo.txt");
+        if (!file.exists()) {
+                file.createNewFile();
+        }
+        ArrayList<String> ValueList = new ArrayList<>();
+        FileReader reader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(reader);
+        FileWriter fileWriter = new FileWriter(file, false);
+        String line = bufferedReader.readLine();
+        
+        if (line != null) {
+            while(line != null){
+                String[] arrayTemp = line.split(":");
+                ValueList.add(arrayTemp[1]);
+                line = bufferedReader.readLine();
+            }
+            fileWriter.write("nombre_simbolico:desc_bitacora_grupo" + '\n');
+            fileWriter.write("fecha_creacion:" + ValueList.toArray()[1] + '\n');
+            fileWriter.write("usuario_creacion:" + ValueList.toArray()[2] + '\n');
+            fileWriter.write("fecha_modificacion:" + java.time.LocalDateTime.now() + '\n');
+            fileWriter.write("usuario_modificacion" + user + '\n');
+            fileWriter.write("#_registros:" + ValueList.toArray()[5] + '\n');
+            fileWriter.write("#_registros:" + ValueList.toArray()[6] + '\n');
+            fileWriter.write("usuario_creacion:" + Integer.toString(Integer.parseInt(ValueList.toArray()[7].toString())-1) + '\n');
+            fileWriter.write("usuario_creacion:" + ValueList.toArray()[8] + '\n');
+        }
+        
     }
     
     public void writeDeleteGroups(GroupBean newGroup, String directory) throws FileNotFoundException, IOException{
@@ -92,7 +133,7 @@ public class DeleteGroupsController implements Initializable {
             if(file.exists()){
                 FileWriter fileWriter = new FileWriter(file, true);
                 PrintWriter printLine = new PrintWriter(fileWriter);
-                printLine.print(newGroup.printTXT() + '\n');
+                printLine.print(newGroup.toString() + '\n');
                 printLine.close();
                 fileWriter.close();
             }
@@ -103,7 +144,6 @@ public class DeleteGroupsController implements Initializable {
         FileWriter fileWriter = new FileWriter(file, false); 
         PrintWriter printWriter = new PrintWriter(fileWriter, false);
         printWriter.flush();
-        printWriter.close();
         printWriter.close();
     }
     
