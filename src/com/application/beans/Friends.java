@@ -11,17 +11,18 @@ import java.time.LocalDateTime;
  *
  * @author ayalr
  */
-public class Friends {
+public class Friends implements Comparable<Friends>{
     private String user;
     private String group;
     private String userFriend;
-    private LocalDateTime dateTrans;
+    private String dateTrans;
     private Integer status;
+    private String key;
     
     
     public Friends(){}
     
-    public Friends(String user, String group, String userFriend, LocalDateTime dateTrans, Integer status){
+    public Friends(String user, String group, String userFriend, String dateTrans, Integer status){
         this.user = user;
         this.group = group;
         this.userFriend = userFriend;
@@ -48,10 +49,10 @@ public class Friends {
     public void setUserFriend(String userFriend){
         this.userFriend = userFriend;
     }
-    public LocalDateTime getDateTrans(){
+    public String getDateTrans(){
         return dateTrans;
     }
-    public void setDateTrans(LocalDateTime dateTrans){
+    public void setDateTrans(String dateTrans){
         this.dateTrans = dateTrans;
     }
     
@@ -61,9 +62,20 @@ public class Friends {
     public void setStatus(Integer status){
         this.status = status;
     } 
+    
+    public String getKey(){
+        return user + group + userFriend;
+    }
+    
     @Override
     public String toString() {
         return user + "|" + group + "|" + userFriend + "|" + dateTrans + "|" + status;
+    }
+
+    @Override
+    public int compareTo(Friends o) {
+        String comparage = ((Friends) o).getKey();
+        return this.getKey().compareTo(comparage);
     }
     
 }
