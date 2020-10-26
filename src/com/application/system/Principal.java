@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -35,6 +36,7 @@ public class Principal extends Application {
     public void start(Stage escenarioPrincipal) {
         this.escenarioPrincipal = escenarioPrincipal;
         escenarioPrincipal.setTitle("Network App");
+        escenarioPrincipal.getIcons().add(new Image(Principal.class.getResourceAsStream("/com/application/img/instagram.png")));
         ventanaLogin();
         escenarioPrincipal.show();
     }
