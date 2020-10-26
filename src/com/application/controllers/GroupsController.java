@@ -30,6 +30,10 @@ public class GroupsController implements Initializable {
         escenarioPrincipal.ventanaCreateGroups();
     }
     
+    public void openUser(){
+        escenarioPrincipal.ventanaNormalUser();
+    }
+    
     public void deleteGroup(){
         escenarioPrincipal.ventanaDeleteGroups();
     }

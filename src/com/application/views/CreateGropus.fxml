@@ -7,9 +7,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.controllers.CreateGropusController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.controllers.CreateGropusController">
    <children>
-      <Button fx:id="btnCreate" layoutX="122.0" layoutY="320.0" mnemonicParsing="false" onAction="#Create" style="-fx-background-color: #0095f6;" text="Create" textFill="WHITE" />
+      <Button fx:id="btnCreate" layoutX="124.0" layoutY="256.0" mnemonicParsing="false" onAction="#Create" style="-fx-background-color: #0095f6;" text="Create" textFill="WHITE" />
       <TextField fx:id="txtType" layoutX="75.0" layoutY="174.0" />
       <Label layoutX="99.0" layoutY="148.0" text="Tipo De grupo" />
       <Label fx:id="lblUser" layoutX="152.0" layoutY="96.0" text="Usuario" />
@@ -21,5 +21,6 @@
          </image>
       </ImageView>
       <Label layoutX="75.0" layoutY="96.0" text="Bienvenid@:" />
+      <Button fx:id="btnBack" layoutX="254.0" layoutY="256.0" mnemonicParsing="false" onAction="#openGroups" style="-fx-background-color: #0095f6;" text="Back" textFill="WHITE" />
    </children>
 </AnchorPane>

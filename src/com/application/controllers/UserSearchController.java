@@ -56,14 +56,20 @@ public class UserSearchController implements Initializable {
     }
     
     public void search() throws IOException{
-        LoginController loginController = new LoginController();
-        UserBean user = loginController.getCompleteUser(txtSearchUser.getText());
-        if(user != null && user != Storage.Instance().actualUser){
-            lblError.setVisible(false);
-            pnUser.setVisible(true);
-            lblUsername.setText(user.getUsername());
-            lblName.setText(user.getName());
-            lblLastName.setText(user.getLastName());
+        if(txtSearchUser.getText()!= null){
+            LoginController loginController = new LoginController();
+            UserBean user = loginController.getCompleteUser(txtSearchUser.getText());
+            if((user != null) && (!user.getUsername().equals(Storage.Instance().actualUser.getUsername())) && (analyzeSearchUser(txtSearchUser.getText()))){
+                lblError.setVisible(false);
+                pnUser.setVisible(true);
+                lblUsername.setText(user.getUsername());
+                lblName.setText(user.getName());
+                lblLastName.setText(user.getLastName());
+            }else {
+                pnUser.setVisible(false);
+                lblError.setVisible(true);
+                txtSearchUser.setText("");
+            }
         }else {
             pnUser.setVisible(false);
             lblError.setVisible(true);
@@ -71,8 +77,42 @@ public class UserSearchController implements Initializable {
         }
     }
     
-    public void analyzeSearchUser(String username){
-        
+    public Boolean analyzeSearchUser(String username) throws IOException{
+        if(!firstAnalyze(username)){
+            return false;
+        }
+        if(!secondAnalyze(username)){
+            return false;
+        }
+        return true;
+    }
+    
+    public Boolean firstAnalyze(String username) throws FileNotFoundException, IOException{
+        File file = new File("C:\\MEIA\\amigos.txt");;
+        FileReader reader = new FileReader(file);
+        BufferedReader bufferReader = new BufferedReader(reader);
+        String lineReader;
+        while((lineReader = bufferReader.readLine()) != null){
+            String parts[] = lineReader.split("\\|");
+            if(parts[1].equals(username) && (Storage.Instance().actualUser.getUsername().equals(parts[0]))){
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public Boolean secondAnalyze(String username) throws FileNotFoundException, IOException{
+        File file = new File("C:\\MEIA\\bitacora_amigo.txt");;
+        FileReader reader = new FileReader(file);
+        BufferedReader bufferReader = new BufferedReader(reader);
+        String lineReader;
+        while((lineReader = bufferReader.readLine()) != null){
+            String parts[] = lineReader.split("\\|");
+            if(parts[1].equals(username) && (Storage.Instance().actualUser.getUsername().equals(parts[0]))){
+                return false;
+            }
+        }
+        return true;
     }
     
     

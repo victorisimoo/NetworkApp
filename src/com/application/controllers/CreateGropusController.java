@@ -45,6 +45,10 @@ public class CreateGropusController implements Initializable {
     public Principal geteEscenarioPrincipal() {
         return escenarioPrincipal;
     }
+    
+    public void openGroups(){
+        escenarioPrincipal.ventanaGroups();
+    }
 
     //crear el grupo
     public void Create() throws IOException {

@@ -43,6 +43,10 @@ public class DeleteGroupsController implements Initializable {
     public Principal geteEscenarioPrincipal() {
         return escenarioPrincipal;
     }
+    
+    public void openGroups(){
+        escenarioPrincipal.ventanaGroups();
+    }
 
     public void deleteMethod() throws IOException {
         String text = lblUser.getText() + txtGroup.getText();

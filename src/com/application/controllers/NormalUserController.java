@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -79,18 +80,18 @@ public class NormalUserController implements Initializable {
                 if( reply == JOptionPane.YES_OPTION){
                     if(request.getDocument() == 1){
                         File file = new File("C:\\MEIA\\amigos.txt");
-                        changeRegisterInFile(request, file, 1);
+                        changeRegisterInFile(request, file, 1, obtenerRegistros());
                     }else {
                         File file = new File("C:\\MEIA\\bitacora_amigo.txt");
-                        changeRegisterInFile(request, file, 1);
+                        changeRegisterInFile(request, file, 1, obtenerRegistrosTwo());
                     }
                 }else {
                     if(request.getDocument() == 1){
                         File file = new File("C:\\MEIA\\amigos.txt");
-                        changeRegisterInFile(request, file, 0);
+                        changeRegisterInFile(request, file, 0, obtenerRegistros());
                     }else {
                         File file = new File("C:\\MEIA\\bitacora_amigo.txt");
-                        changeRegisterInFile(request, file, 0);
+                        changeRegisterInFile(request, file, 0, obtenerRegistrosTwo());
                     } 
                 }
             }
@@ -120,6 +121,8 @@ public class NormalUserController implements Initializable {
                 request = new FriendRequest();
             }
         }
+        reader.close();
+        bufferReader.close();
     }
     
     public void getFriendRequestFriendFile(String username) throws FileNotFoundException, IOException{
@@ -145,28 +148,75 @@ public class NormalUserController implements Initializable {
                 request = new FriendRequest();
             }
         }
+        reader.close();
+        bufferReader.close();
     }
     
-    public void changeRegisterInFile(FriendRequest friend, File file, int response) throws FileNotFoundException, IOException{
-        BufferedReader reader = new BufferedReader(new FileReader(file));
-        String line = reader.readLine();
-        FileWriter writer = null;
-        String oldContent = "";
-        while(line != null){
-            oldContent = oldContent + line + System.lineSeparator();
-            line = reader.readLine();
+    public void changeRegisterInFile(FriendRequest friend, File file, int response, ArrayList<FriendRequest> friends) throws FileNotFoundException, IOException{
+        FileWriter fileWriter = new FileWriter(file);
+        PrintWriter printLine = new PrintWriter(fileWriter);
+        for (FriendRequest friendRequest : friends) {
+            if(friendRequest.getKeyRequest().equals(friend.getKeyRequest())){
+                friendRequest.setResponse(response);
+                friendRequest.setStatus(1);
+                printLine.print(friendRequest.toString() + '\n');
+            }else {
+                printLine.print(friendRequest.toString() + '\n');
+            }
         }
-        FriendRequest newFriend = friend;
-        newFriend.setStatus(response);
-        newFriend.setResponse(1);
-        String newContent = oldContent.replaceAll(friend.toString(), newFriend.toString());
-        
-        writer = new FileWriter(file);
-        writer.write(newContent);
+        printLine.close();
+        fileWriter.close();
+    }
+    
+    public ArrayList<FriendRequest> obtenerRegistros() throws FileNotFoundException, IOException{
+        File file = new File("C:\\MEIA\\amigos.txt");
+        ArrayList<FriendRequest> firstFile = new ArrayList<>();
+        FriendRequest request = new FriendRequest();
+        FileReader reader = new FileReader(file);
+        BufferedReader bufferReader = new BufferedReader(reader);
+        String lineReader;
+        while((lineReader = bufferReader.readLine()) != null){
+            String parts[] = lineReader.split("\\|");
+
+            request.setUser(parts[0]);
+            request.setUserFriend(parts[1]);
+            request.setResponse(Integer.parseInt(parts[2]));
+            request.setDateRequest(parts[3]);
+            request.setUserRequest(parts[4]);
+            request.setStatus(Integer.parseInt(parts[5]));
+            firstFile.add(request);
+            request = new FriendRequest();
+        }
         
         reader.close();
-        writer.close();
+        bufferReader.close();
+        return firstFile;
     }
+    
+    public ArrayList<FriendRequest> obtenerRegistrosTwo() throws FileNotFoundException, IOException{
+        File file = new File("C:\\MEIA\\bitacora_amigo.txt");
+        ArrayList<FriendRequest> secondFile = new ArrayList<>();
+        FriendRequest request = new FriendRequest();
+        FileReader reader = new FileReader(file);
+        BufferedReader bufferReader = new BufferedReader(reader);
+        String lineReader;
+        while((lineReader = bufferReader.readLine()) != null){
+            String parts[] = lineReader.split("\\|");
+
+            request.setUser(parts[0]);
+            request.setUserFriend(parts[1]);
+            request.setResponse(Integer.parseInt(parts[2]));
+            request.setDateRequest(parts[3]);
+            request.setUserRequest(parts[4]);
+            request.setStatus(Integer.parseInt(parts[5]));
+            secondFile.add(request);
+            request = new FriendRequest();
+        }
+        reader.close();
+        bufferReader.close();
+        return secondFile;
+    }
+    
     
     public void AddToGroup(){
         escenarioPrincipal.ventanaAddFriendsToGroup();
