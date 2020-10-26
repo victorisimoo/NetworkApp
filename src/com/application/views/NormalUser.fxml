@@ -105,15 +105,17 @@
          </font>
       </Label>
       <Hyperlink layoutX="70.0" layoutY="200.0" text="Cambiar" />
+
       <Button layoutX="434.0" layoutY="358.0" mnemonicParsing="false" text="Salir" />
       <Button layoutX="328.0" layoutY="358.0" mnemonicParsing="false" onAction="#searchUserVentana" style="-fx-background-color: #0095f6;" text="Agregar amigo" textFill="WHITE" />
       <Button layoutX="225.0" layoutY="358.0" mnemonicParsing="false" style="-fx-background-color: #0095f6;" text="Agregar grupo" textFill="WHITE" />
+
       <TextArea fx:id="txtNotify" layoutX="316.0" layoutY="271.0" prefHeight="73.0" prefWidth="150.0" />
       <Label layoutX="324.0" layoutY="250.0" text="Notificaciones recientes">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Button layoutX="41.0" layoutY="358.0" mnemonicParsing="false" text="Guardar cambios" />
+      <Button fx:id="btnAddFriendToGroup" layoutX="105.0" layoutY="358.0" mnemonicParsing="false" onAction="#AddToGroup" style="-fx-background-color: #66bd2c;" text="Agregar miembro" textFill="#fcfcfc" />
    </children>
 </AnchorPane>
