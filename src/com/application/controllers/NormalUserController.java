@@ -32,9 +32,7 @@ public class NormalUserController implements Initializable {
     @FXML private Label lblUser;
     @FXML private Label lblName;
     @FXML private Label lblLastName;
-    @FXML private TextField txtPhone;
-    @FXML private DatePicker dtpCalendar;
-    @FXML private TextArea txtNotify;
+    @FXML private Label lblDate;    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -47,9 +45,7 @@ public class NormalUserController implements Initializable {
         lblUser.setText(Storage.Instance().actualUser.getUsername());
         lblName.setText(Storage.Instance().actualUser.getName());
         lblLastName.setText(Storage.Instance().actualUser.getLastName());
-        txtPhone.setText(Storage.Instance().actualUser.getPhone());
-        dtpCalendar.setValue(LocalDate.now());
-        txtNotify.disableProperty();
+        lblDate.setText(Storage.Instance().actualUser.getBirth());
         try {
             analyzeFriendsRequest();
         } catch (IOException ex) {

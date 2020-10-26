@@ -9,8 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="350.0" prefWidth="350.0" style="-fx-background-color: white;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="com.application.controllers.UserSearchController">
+<AnchorPane id="AnchorPane" prefHeight="350.0" prefWidth="350.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.controllers.UserSearchController">
    <children>
       <ImageView fitHeight="35.0" fitWidth="157.0" layoutX="113.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -43,6 +42,6 @@
          </font>
       </Label>
       <Button fx:id="btnAddNew" layoutX="97.0" layoutY="295.0" mnemonicParsing="false" style="-fx-background-color: #0095f6; -fx-cursor: hand;" text="Agregar nuevo amigo" textFill="WHITE" />
-      <Button fx:id="btnCancelar" layoutX="236.0" layoutY="295.0" mnemonicParsing="false" onAction="#cancel" style="-fx-background-color: #d9d9d9; -fx-cursor: hand;" text="Cancelar" />
+      <Button fx:id="btnCancelar" alignment="CENTER" layoutX="236.0" layoutY="295.0" mnemonicParsing="false" onAction="#cancel" style="-fx-background-color: #d9d9d9; -fx-cursor: hand;" text="Cancelar" />
    </children>
 </AnchorPane>
