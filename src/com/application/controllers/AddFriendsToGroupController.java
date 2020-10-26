@@ -1,6 +1,5 @@
 
 package com.application.controllers;
-
 import com.application.beans.Friends;
 import com.application.beans.Index;
 import com.application.beans.UserBean;
@@ -14,6 +13,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.ResourceBundle;
 import java.util.StringJoiner;
 import javafx.fxml.FXML;
@@ -50,10 +51,6 @@ public class AddFriendsToGroupController implements Initializable {
     public void back() {
         escenarioPrincipal.ventanaNormalUser();
     }
-    
-    RegisterController normal = new RegisterController();
-    
-    
 
     // <editor-fold defaultstate="collapsed" desc="Add friends to group">
     int initialD = 0;
@@ -62,7 +59,7 @@ public class AddFriendsToGroupController implements Initializable {
     public void addNewFriend() throws IOException {
         Friends newFriend = new Friends();
         newFriend.setUser(Storage.Instance().actualUser.getUsername());
-        newFriend.setDateTrans(java.time.LocalDateTime.now());
+        newFriend.setDateTrans("" + java.time.LocalDateTime.now());
         newFriend.setStatus(1);
         newFriend.setUserFriend(txtAddFriend.getText());
         newFriend.setGroup(txtGroup.getText());
@@ -72,7 +69,7 @@ public class AddFriendsToGroupController implements Initializable {
                 txtAddFriend.setText("");
                 txtGroup.setText("");
                 lblMessage.setText("El usuario ya fue ingresado al grupo, intentelo nuevamente.");
-            } else if (getCompleteUser(newFriend.getUserFriend()) != null && ifGroupExist(txtGroup.getText())) {
+            } else if (getCompleteUser(newFriend.getUserFriend()) != null && ifGroupExist(txtGroup.getText(),txtAddFriend.getText() )) {
                 if (addFriend(newFriend)) {
                     addToIndex(newFriend);
                     changeGroupNumber(txtGroup.getText(), true);
@@ -637,6 +634,7 @@ public class AddFriendsToGroupController implements Initializable {
             LecturaArchivo = new FileReader(usuario);
             BufferedReader LeerArchivo = new BufferedReader(LecturaArchivo);
             String Linea = "";
+            ArrayList<Friends> newFriend = new ArrayList<Friends>();
             String[] info = new String[registers];
             if (option == true) {
                 info = new String[activeReg];
@@ -647,8 +645,9 @@ public class AddFriendsToGroupController implements Initializable {
                 if(option == true){
                     int x = Linea.length();
                     if (!"0".equals(Linea.split("[|]")[4])) {
-                        info[counter] = new String();
-                        info[counter] = Linea;
+                        Friends newFr = new Friends();
+                        newFr = createFriendObject(Linea);
+                        newFriend.add(newFr);
                         counter++;
                     }
                     
@@ -674,21 +673,47 @@ public class AddFriendsToGroupController implements Initializable {
                         String newLine = "";
                         int size = info[i].length();
                         newLine = info[i].substring(0, size - 1) + "0";
-                        info[i] = newLine;
+                        newFriend.add(createFriendObject(newLine));
                     }
                 }
             }
             
-            for (int i = 0; i < info.length; i++) {
-                bw.write(info[i]);
-                bw.newLine();
+            if (option == true || delete == 1) {
+                Collections.sort(newFriend);
+                for(var item : newFriend){
+                    bw.write(item.toString());
+                    bw.newLine();
+                }
+                bw.close();
+                LecturaArchivo.close();
+                LeerArchivo.close();
             }
-            bw.close();
-            LecturaArchivo.close();
-            LeerArchivo.close();
+            else{
+                for (int i = 0; i < info.length; i++) {
+                    bw.write(info[i]);
+                    bw.newLine();
+                }
+                bw.close();
+                LecturaArchivo.close();
+                LeerArchivo.close();
+            }
+            
+            
         }
     }
     int activeReg = 0;
+    
+    
+    public Friends createFriendObject(String Linea){
+        String[] split = Linea.split("[|]");
+        Friends info = new Friends();
+        info.setUser(split[0]);
+        info.setGroup(split[1]);
+        info.setUserFriend(split[2]);
+        info.setDateTrans(split[3]);
+        info.setStatus(Integer.parseInt(split[4]));
+        return info;
+    }
     
     //Method for reorganize the index
     public void reorganize() throws IOException{
@@ -795,7 +820,7 @@ public class AddFriendsToGroupController implements Initializable {
     }
     
     //Check if group exist
-    public boolean ifGroupExist(String group) throws FileNotFoundException, IOException{
+    public boolean ifGroupExist(String group, String user) throws FileNotFoundException, IOException{
         File usuario = new File("C:\\MEIA\\grupo.txt");
         if (usuario.exists() == true) {
             FileReader LecturaArchivo;
@@ -804,6 +829,9 @@ public class AddFriendsToGroupController implements Initializable {
             String Linea = "";
             Linea = LeerArchivo.readLine();
             while (Linea != null) {
+                if (Linea.split("[|]")[0].equals(user) && Linea.split("[|]")[1].equals(group) ) {
+                    return false;
+                }
                 if (Linea.split("[|]")[1].equals(group)) {
                     return true;
                 }
