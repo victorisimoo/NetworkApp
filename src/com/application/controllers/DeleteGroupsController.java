@@ -52,6 +52,8 @@ public class DeleteGroupsController implements Initializable {
         String text = lblUser.getText() + txtGroup.getText();
         
         if (deleteGroups("C:\\MEIA\\bitacora_grupo.txt", text, lblUser.getText())) {
+            AddFriendsToGroupController addFriendsG = new AddFriendsToGroupController();
+            addFriendsG.deleteGroupStatus(txtGroup.getText());
             JOptionPane.showMessageDialog(null, "Se ha eliminado correctamente :D", "Proceso exitoso", JOptionPane.OK_OPTION);
         }
         else{
