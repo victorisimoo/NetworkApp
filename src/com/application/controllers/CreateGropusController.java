@@ -300,7 +300,7 @@ public class CreateGropusController implements Initializable {
         //recorrer y validar la lista de los grupos
         for (var item : groupsList) {
             //eliminar los grupos que estan inactivos
-            if (item.getStatus() == "0") {
+            if ("0".equals(item.getStatus())) {
                 groupsList.remove(item);
             } //agrega los grupos activos
             else {
