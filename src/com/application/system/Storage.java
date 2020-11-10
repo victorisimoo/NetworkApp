@@ -19,4 +19,5 @@ public class Storage {
     }
     
     public UserBean actualUser = new UserBean();
+    public UserBean secondUser = new UserBean();
 }

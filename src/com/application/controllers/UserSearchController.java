@@ -27,7 +27,7 @@ import javafx.scene.layout.Pane;
 import javax.swing.JOptionPane;
 
 /**
- * @author victo
+ * @author victorisimo
  */
 public class UserSearchController implements Initializable {
     private Principal escenarioPrincipal;
@@ -44,7 +44,6 @@ public class UserSearchController implements Initializable {
         organization = 3;
         this.pnUser.setVisible(false);
         lblError.setVisible(false);
-
     }    
     
     public void setEscenarioPrincipal(Principal escenarioPrincipal){
@@ -114,7 +113,6 @@ public class UserSearchController implements Initializable {
         }
         return true;
     }
-    
     
     public void addFriend() throws IOException{
         File file = new File("C:\\MEIA\\bitacora_amigo.txt");
@@ -242,7 +240,6 @@ public class UserSearchController implements Initializable {
         printLine.close();
         fileWriter.close();
     }
-    
     
     public String dateNow(){
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");

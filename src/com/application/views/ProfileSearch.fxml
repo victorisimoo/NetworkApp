@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="530.0" prefWidth="530.0" style="-fx-background-color: white;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="com.application.controllers.ProfileSearchController">
+   <children>
+      <ImageView fx:id="imgProfile" fitHeight="126.0" fitWidth="113.0" layoutX="30.0" layoutY="90.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/profile.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="166.0" layoutY="93.0" text="Usuario:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblUser" layoutX="216.0" layoutY="94.0" text="lblUser" />
+      <Label layoutX="165.0" layoutY="115.0" text="Nombre:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblName" layoutX="217.0" layoutY="116.0" text="lblName" />
+      <Label layoutX="165.0" layoutY="136.0" text="Apellido:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblLastName" layoutX="218.0" layoutY="137.0" text="lblApellido" />
+      <Label layoutX="165.0" layoutY="157.0" text="Nacimiento:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Hyperlink layoutX="63.0" layoutY="206.0" text="Cambiar" />
+      <Label fx:id="lblDate" layoutX="235.0" layoutY="158.0" text="lblDate" />
+      <ImageView fitHeight="34.0" fitWidth="164.0" layoutX="202.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/NetworkTitle.png" />
+         </image>
+      </ImageView>
+      <Line endX="140.0" layoutX="363.0" layoutY="75.0" startX="-168.0" />
+      <Label fx:id="lblName211" layoutX="30.0" layoutY="65.0" text="Información del contacto">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Line endX="140.0" layoutX="358.0" layoutY="250.0" startX="-195.0" />
+      <Label fx:id="lblName2111" layoutX="25.0" layoutY="240.0" text="Contenido de perfil">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="350.0" layoutY="93.0" text="Seguidores">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="447.0" layoutY="93.0" text="Seguidos">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="408.0" layoutY="123.0" text="Grupos">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblSeguid" layoutX="372.0" layoutY="110.0" text="100" />
+      <Label fx:id="lblSegui" layoutX="463.0" layoutY="110.0" text="300" />
+      <Label fx:id="lblGrouups" layoutX="425.0" layoutY="139.0" text="4" />
+      <Label layoutX="165.0" layoutY="181.0" text="Descripción:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblName22" layoutX="239.0" layoutY="181.0" text="Soy una persona muy amigable," />
+      <Label fx:id="lblName221" layoutX="165.0" layoutY="202.0" text="Me gustan las tardes lluviosas, leer y el café." />
+      <ImageView fitHeight="173.0" fitWidth="201.0" layoutX="46.0" layoutY="299.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/profile.jpg" />
+         </image>
+      </ImageView>
+      <TextArea fx:id="txtPublicMessages" layoutX="280.0" layoutY="299.0" prefHeight="173.0" prefWidth="205.0" />
+      <Label layoutX="75.0" layoutY="273.0" text="Fotografías de perfil">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="331.0" layoutY="273.0" text="Mensajes públicos">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="54.0" fitWidth="30.0" layoutX="219.0" layoutY="371.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/rigth.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="54.0" fitWidth="30.0" layoutX="16.0" layoutY="371.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/left.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="btnSearchFriend" layoutX="215.0" layoutY="484.0" mnemonicParsing="false" onAction="#returnProfile" prefHeight="25.0" prefWidth="94.0" style="-fx-background-color: #0095f6; -fx-cursor: hand;" text="Regresar" textFill="WHITE" />
+   </children>
+</AnchorPane>
