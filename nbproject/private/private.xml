@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+<<<<<<< HEAD
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
         <file>
             <url>src/com/application/beans/UserBean.java</url>
@@ -17,6 +18,13 @@
             <file>file:/C:/Users/victo/Documents/NetBeansProjects/NetworkApp/src/com/application/system/Principal.java</file>
             <file>file:/C:/Users/victo/Documents/NetBeansProjects/NetworkApp/src/com/application/controllers/SendMessageController.java</file>
             <file>file:/C:/Users/victo/Documents/NetBeansProjects/NetworkApp/src/com/application/beans/MessageBean.java</file>
+=======
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/ayalr/Documents/NetBeansProjects/NetworkApp/src/com/application/controllers/AdminUserController.java</file>
+            <file>file:/C:/Users/ayalr/Documents/NetBeansProjects/NetworkApp/src/com/application/controllers/AddFriendsToGroupController.java</file>
+>>>>>>> b8b974dcdd16f3f8145c1ae794851e3b7c30bb3c
         </group>
     </open-files>
 </project-private>

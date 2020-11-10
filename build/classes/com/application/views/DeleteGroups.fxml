@@ -6,19 +6,37 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.controllers.DeleteGroupsController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="500.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.controllers.DeleteGroupsController">
    <children>
-      <Label fx:id="lblUser" layoutX="166.0" layoutY="105.0" text="Usuario" />
-      <TextField fx:id="txtGroup" layoutX="84.0" layoutY="180.0" />
-      <Button fx:id="btnDeleteGroup" layoutX="134.0" layoutY="222.0" mnemonicParsing="false" onAction="#deleteMethod" style="-fx-background-color: #0095f6;" text="Borrar" textFill="WHITE" />
-      <Label layoutX="92.0" layoutY="105.0" text="Bienvenid@:" />
+      <Label fx:id="lblUser" layoutX="97.0" layoutY="149.0" text="Usuario" />
+      <TextField fx:id="txtGroup" layoutX="175.0" layoutY="247.0" />
+      <Button fx:id="btnDeleteGroup" layoutX="207.0" layoutY="289.0" mnemonicParsing="false" onAction="#deleteMethod" style="-fx-background-color: #0095f6;" text="Borrar grupo" textFill="WHITE" />
       <ImageView fitHeight="46.0" fitWidth="142.0" layoutX="193.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/NetworkTitle.png" />
          </image>
       </ImageView>
-      <Label layoutX="84.0" layoutY="156.0" text="Ingrese el grupo a borrar" />
-      <Button fx:id="btnBack" layoutX="138.0" layoutY="277.0" mnemonicParsing="false" onAction="#openGroups" style="-fx-background-color: #0095f6;" text="Back" textFill="WHITE" />
+      <Label layoutX="154.0" layoutY="218.0" text="Ingrese el grupo que desea eliminar" />
+      <Button fx:id="btnBack" layoutX="425.0" layoutY="335.0" mnemonicParsing="false" onAction="#openGroups" text="Volver" />
+      <Line endX="100.0" layoutX="365.0" layoutY="126.0" startX="-186.0" />
+      <Label fx:id="lblName211" layoutX="31.0" layoutY="117.0" text="Información personal">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="34.0" layoutY="149.0" text="Usuario:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Line endX="100.0" layoutX="367.0" layoutY="194.0" startX="-233.19998168945312" startY="-1.52587890625E-5" />
+      <Label fx:id="lblName2111" layoutX="34.0" layoutY="184.0" text="Eliminar grupo">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

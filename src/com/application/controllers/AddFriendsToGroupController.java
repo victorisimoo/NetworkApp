@@ -280,8 +280,11 @@ public class AddFriendsToGroupController implements Initializable {
 
     //Method for sort index
     public void sortIndex(Index newIndex, Index[] indexI, int position, int initial, int size, int prev) {
-        if (indexI[0] == null) {
+        if (indexI[0] == null || activeReg == 0) {
             newIndex.setRegister(size);
+            if(position<0) {
+                position = 0;
+            }
             newIndex.setNextPosition(position);
             newIndex.setPosition("1." + registers);
             indexI[size - 1] = newIndex;
@@ -463,7 +466,7 @@ public class AddFriendsToGroupController implements Initializable {
             information[3] = "fecha_modificacion:" + java.time.LocalDateTime.now();
             information[4] = "usuario_modificacion:" + userName;
             information[5] = "#_registros:0";
-            information[6] = "registros_activos:1";
+            information[6] = "registros_activos:0";
             information[7] = "registros_inactivos:0";
             information[8] = "registro_inicial:" + Initial;
             information[9] = "no_bloques:1";
@@ -782,7 +785,7 @@ public class AddFriendsToGroupController implements Initializable {
             LecturaArchivo = new FileReader(usuario);
             BufferedReader LeerArchivo = new BufferedReader(LecturaArchivo);
             String Linea = "";
-            int cantGroup = cantGroup();
+            int cantGroup = cantGroup() + inactives;
             String[] info = new String[cantGroup];
             Linea = LeerArchivo.readLine();
             boolean found = false;
@@ -871,7 +874,7 @@ public class AddFriendsToGroupController implements Initializable {
                 if (Linea.split("[|]")[0].equals(user) && Linea.split("[|]")[1].equals(group)) {
                     return false;
                 }
-                if (Linea.split("[|]")[1].equals(group)) {
+                if (Linea.split("[|]")[1].equals(group) && Linea.split("[|]")[6].equals("1")) {
                     return true;
                 }
                 counter++;
@@ -889,7 +892,7 @@ public class AddFriendsToGroupController implements Initializable {
                 if (Linea.split("[|]")[0].equals(user) && Linea.split("[|]")[1].equals(group)) {
                     return false;
                 }
-                if (Linea.split("[|]")[1].equals(group)) {
+                if (Linea.split("[|]")[1].equals(group)&& Linea.split("[|]")[6].equals("1")) {
                     return true;
                 }
                 counter++;
@@ -900,6 +903,7 @@ public class AddFriendsToGroupController implements Initializable {
         return false;
     }
 
+    int inactives = 0;
     //Number of groups
     public int cantGroup() throws IOException {
         File MEIA = new File("C:\\MEIA");
@@ -919,6 +923,9 @@ public class AddFriendsToGroupController implements Initializable {
                 if (counter == 6) {
                     groups = Integer.parseInt(Linea.split(":")[1]);
                 }
+                if(counter == 7){
+                    inactives = Integer.parseInt(Linea.split(":")[1]);
+                }
                 counter++;
                 Linea = LeerArchivo.readLine();
             }
@@ -928,8 +935,6 @@ public class AddFriendsToGroupController implements Initializable {
         }
         return 0;
     }
-
-    
     int delete = 0;
 
     //If delete group in GroupDelete
