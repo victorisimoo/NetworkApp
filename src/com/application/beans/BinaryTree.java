@@ -57,7 +57,7 @@ public class BinaryTree {
         if (node.value == null) {
             node = newImagen;
         } else {
-            if (comparison(newImagen.value.getUser(), newImagen.value.getUser(), node.value.user, node.value.path) == false) {
+            if (comparison(newImagen.value.getUser(), newImagen.value.getPath(), node.value.user, node.value.path) == false) {
                 if (node.right.value == null) {
                     node.right = newImagen;
                 }
@@ -108,6 +108,16 @@ public class BinaryTree {
         else{ return true; }
     }
     
+    public boolean ifExist(String user, String user2, String path, String path2){
+        if (user.equals(user2)) {
+            if (path.equals(path2)) {
+                return true;
+            }
+            else{ return false; }
+        }
+        else{ return false; }
+    }
+    
     //Write data in file
     public boolean insertInFile(Images imagen){
         try {
@@ -129,9 +139,6 @@ public class BinaryTree {
 
                 Linea = LeerArchivo.readLine();
                 String[] split;
-                FileWriter fw = new FileWriter(usuario, false);
-                BufferedWriter bw = new BufferedWriter(fw);
-
                 while (Linea != null) {
                     Images aux = new Images();
                     split = Linea.split("[|]");
@@ -145,17 +152,42 @@ public class BinaryTree {
                     insertInTree(aux);
                     Linea = LeerArchivo.readLine();
                 }
-                insertInTree(imagen);
-                for (Images i : tree) {
-                    bw.write(i.toString());
-                    bw.newLine();
-                }
-                bw.close();
-                LecturaArchivo.close();
-                LeerArchivo.close();
+                
+                if (tree.isEmpty()) {
+                    insertInTree(imagen);
+                    FileWriter fw = new FileWriter(usuario, false);
+                    BufferedWriter bw = new BufferedWriter(fw);
+                    for (Images i : tree) {
+                        bw.write(i.toString());
+                        bw.newLine();
+                    }
+                    bw.close();
+                    LecturaArchivo.close();
+                    LeerArchivo.close();
 
-                writeDescriptor();
-                return true;
+                    writeDescriptor();
+                    return true;
+                }
+                else{
+                    for (Images i : tree) {
+                        if(ifExist(i.getUser(), imagen.getUser(), i.getPath(), imagen.getPath())){
+                           return false; 
+                        }
+                    }
+                    FileWriter fw = new FileWriter(usuario, false);
+                    BufferedWriter bw = new BufferedWriter(fw);
+                    insertInTree(imagen);
+                    for (Images j : tree) {
+                        bw.write(j.toString());
+                        bw.newLine();
+                    }
+                    bw.close();
+                    LecturaArchivo.close();
+                    LeerArchivo.close();
+
+                    writeDescriptor();
+                    return true;
+                }
             }
             return false;
 

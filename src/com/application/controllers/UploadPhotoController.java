@@ -67,7 +67,7 @@ public class UploadPhotoController implements Initializable {
     }
     
     public void insertImagen() throws IOException{
-        copyImagen(TFRoute.getText());
+        
         Images imagen = new Images();
         imagen.setRegister(photosTree.sizeTree());
         imagen.setLeft(-1);
@@ -77,13 +77,16 @@ public class UploadPhotoController implements Initializable {
         imagen.setStatus(1);
         imagen.setUser(Storage.Instance().actualUser.getUsername());
         if (photosTree.insertInFile(imagen)) {
-            JOptionPane.showMessageDialog(null, "La imagen se ha cargado exitosamente.", "Éxito", JOptionPane.PLAIN_MESSAGE);
+            copyImagen(TFRoute.getText());
             File file = new File(TFRoute.getText());
             Image image = new Image(file.toURI().toString(),300, 300, false, false);
             imageView.setImage(image);
             TFRoute.setText("");
+            JOptionPane.showMessageDialog(null, "La imagen se ha cargado exitosamente.", "Éxito", JOptionPane.PLAIN_MESSAGE);
         }
         else{
+            TFRoute.setText("");
+            imageView.setImage(null);
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error, intentelo nuevamente.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
