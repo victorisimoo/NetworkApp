@@ -7,7 +7,11 @@ import com.application.controllers.DeleteGroupsController;
 import com.application.controllers.GroupsController;
 import com.application.controllers.LoginController;
 import com.application.controllers.NormalUserController;
+import com.application.controllers.ProfileSearchController;
 import com.application.controllers.RegisterController;
+import com.application.controllers.SearchController;
+import com.application.controllers.SendMessageController;
+import com.application.controllers.UploadPhotoController;
 import com.application.controllers.UserSearchController;
 import java.io.InputStream;
 import javafx.application.Application;
@@ -70,7 +74,7 @@ public class Principal extends Application {
     
     public void ventanaNormalUser(){
         try {
-            NormalUserController normalUser = (NormalUserController) cambioEscena("NormalUser.fxml", 500, 400);
+            NormalUserController normalUser = (NormalUserController) cambioEscena("NormalUser.fxml", 500, 500);
             normalUser.setEscenarioPrincipal(this);
         }catch(Exception e){
             e.printStackTrace();
@@ -90,6 +94,33 @@ public class Principal extends Application {
         try {
             RegisterController registerController = (RegisterController) cambioEscena("Register.fxml", 500, 400);
             registerController.setEscenarioPrincipal(this);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void ventanaSearchProfile(){
+        try {
+            SearchController search = (SearchController) cambioEscena("Search.fxml", 350, 300);
+            search.setEscenarioPrincipal(this);
+        }catch (Exception e ){
+            e.printStackTrace();
+        }
+    }
+    
+    public void ventanaMessage(){
+        try{
+            SendMessageController mensaje = (SendMessageController) cambioEscena("SendMessage.fxml", 350, 350);
+            mensaje.setEscenarioPrincipal(this);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void ventanaSearchUser(){
+        try {
+            ProfileSearchController profile = (ProfileSearchController) cambioEscena("ProfileSearch.fxml", 530, 530);
+            profile.setEscenarioPrincipal(this);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -121,6 +152,16 @@ public class Principal extends Application {
             e.printStackTrace();
         }
     }
+    
+     public void ventanaUploadPhoto(){
+        try {
+            UploadPhotoController UploadPhotoController = (UploadPhotoController) cambioEscena("UploadPhoto.fxml", 500, 400);
+            UploadPhotoController.setEscenarioPrincipal(this);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    
     
     public Initializable cambioEscena(String fxml, int ancho, int alto) throws Exception {
         Initializable resultado = null;

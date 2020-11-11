@@ -1,6 +1,7 @@
 package com.application.controllers;    
 
 import com.application.beans.FriendRequest;
+import com.application.beans.MessageBean;
 import com.application.system.Principal;
 import com.application.system.Storage;
 import java.io.BufferedReader;
@@ -11,15 +12,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javax.swing.JOptionPane;
 
 /**
@@ -29,16 +27,26 @@ public class NormalUserController implements Initializable {
     
     private Principal escenarioPrincipal;
     ArrayList<FriendRequest> requests = new ArrayList<>();
+    ArrayList<MessageBean> publicMessages = new ArrayList<>();
+    ArrayList<MessageBean> privateMessages = new ArrayList<>();
     @FXML private Label lblUser;
     @FXML private Label lblName;
     @FXML private Label lblLastName;
-    @FXML private Label lblDate;    
+    @FXML private Label lblDate;   
+    @FXML private TextArea txtPublicMessages;
+    @FXML private TextArea txtPrivateMessages;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
             getFriendRequestBitacora(Storage.Instance().actualUser.getUsername());
             getFriendRequestFriendFile(Storage.Instance().actualUser.getUsername());
+            obtenerMensajesPublicos(Storage.Instance().actualUser.getUsername());
+            obtenerMensajesPublicosSegundo(Storage.Instance().actualUser.getUsername());
+            setTextAreaMessages();
+            obtenerMensajesPrivados(Storage.Instance().actualUser.getUsername());
+            obtenerMensajesPrivadosSegundo(Storage.Instance().actualUser.getUsername());
+            setTextAreaPrivateMessages();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -46,6 +54,8 @@ public class NormalUserController implements Initializable {
         lblName.setText(Storage.Instance().actualUser.getName());
         lblLastName.setText(Storage.Instance().actualUser.getLastName());
         lblDate.setText(Storage.Instance().actualUser.getBirth());
+        txtPublicMessages.setDisable(true);
+        txtPrivateMessages.setDisable(true);
         try {
             analyzeFriendsRequest();
         } catch (IOException ex) {
@@ -67,6 +77,10 @@ public class NormalUserController implements Initializable {
     
     public void openGroups(){
         escenarioPrincipal.ventanaGroups();
+    }
+    
+    public void openSearchProfile(){
+        escenarioPrincipal.ventanaSearchProfile();
     }
     
     public void analyzeFriendsRequest() throws IOException{
@@ -218,6 +232,14 @@ public class NormalUserController implements Initializable {
         escenarioPrincipal.ventanaAddFriendsToGroup();
     }
     
+    public void UploadPhoto() {
+        escenarioPrincipal.ventanaUploadPhoto();
+    }
+    
+    public void ventanaMessage(){
+        escenarioPrincipal.ventanaMessage();
+    }
+    
     public void reorganize() throws IOException{
         AddFriendsToGroupController addFriendsG = new AddFriendsToGroupController();
         CreateGropusController createGropus = new CreateGropusController();
@@ -229,5 +251,118 @@ public class NormalUserController implements Initializable {
         System.exit(0);
     }
     
+    public void obtenerMensajesPublicos(String username) throws FileNotFoundException, IOException{
+        File file = new File("C:\\MEIA\\bitacora_mensajes.txt");
+        MessageBean message = new MessageBean();
+        FileReader reader = new FileReader(file);
+        BufferedReader bufferReader = new BufferedReader(reader);
+        String lineReader;
+        while((lineReader = bufferReader.readLine()) != null){
+            String parts[] = lineReader.split("\\|");
+            if(parts[2].equals(Storage.Instance().actualUser.getUsername())){
+                if(Integer.parseInt(parts[6]) == 0){
+                    message.setKeyMessage(parts[0]);
+                    message.setUserSend(parts[1]);
+                    message.setUserRecipe(parts[2]);
+                    message.setMessage(parts[3]);
+                    message.setDateMessage(parts[4]);
+                    message.setStatus(Integer.parseInt(parts[5]));
+                    message.setTypeMessage(Integer.parseInt(parts[6]));
+                    publicMessages.add(message);
+                    message = new MessageBean();
+                }
+            }
+            
+        }
+    }
     
+    public void obtenerMensajesPublicosSegundo(String username) throws FileNotFoundException, IOException{
+        File file = new File("C:\\MEIA\\mensajes.txt");
+        MessageBean message = new MessageBean();
+        FileReader reader = new FileReader(file);
+        BufferedReader bufferReader = new BufferedReader(reader);
+        String lineReader;
+        while((lineReader = bufferReader.readLine()) != null){
+            String parts[] = lineReader.split("\\|");
+            if(parts[2].equals(Storage.Instance().actualUser.getUsername())){
+                if(Integer.parseInt(parts[6]) == 0){
+                    message.setKeyMessage(parts[0]);
+                    message.setUserSend(parts[1]);
+                    message.setUserRecipe(parts[2]);
+                    message.setMessage(parts[3]);
+                    message.setDateMessage(parts[4]);
+                    message.setStatus(Integer.parseInt(parts[5]));
+                    message.setTypeMessage(Integer.parseInt(parts[6]));
+                    publicMessages.add(message);
+                    message = new MessageBean();
+                }
+            }
+        }
+    }
+    
+    public void setTextAreaMessages(){
+        String mensajes = "";
+        for(MessageBean message: publicMessages){
+            mensajes = mensajes + message.getUserSend() + ": "+ message.getMessage() + '\n';
+        }
+        txtPublicMessages.setText(mensajes);
+    }
+    
+    
+    public void obtenerMensajesPrivados(String username) throws FileNotFoundException, IOException{
+        File file = new File("C:\\MEIA\\bitacora_mensajes.txt");
+        MessageBean message = new MessageBean();
+        FileReader reader = new FileReader(file);
+        BufferedReader bufferReader = new BufferedReader(reader);
+        String lineReader;
+        while((lineReader = bufferReader.readLine()) != null){
+            String parts[] = lineReader.split("\\|");
+            if(parts[2].equals(Storage.Instance().actualUser.getUsername())){
+                if(Integer.parseInt(parts[6]) == 1){
+                    message.setKeyMessage(parts[0]);
+                    message.setUserSend(parts[1]);
+                    message.setUserRecipe(parts[2]);
+                    message.setMessage(parts[3]);
+                    message.setDateMessage(parts[4]);
+                    message.setStatus(Integer.parseInt(parts[5]));
+                    message.setTypeMessage(Integer.parseInt(parts[6]));
+                    privateMessages.add(message);
+                    message = new MessageBean();
+                }
+            }
+            
+        }
+    }
+    
+    public void obtenerMensajesPrivadosSegundo(String username) throws FileNotFoundException, IOException{
+        File file = new File("C:\\MEIA\\mensajes.txt");
+        MessageBean message = new MessageBean();
+        FileReader reader = new FileReader(file);
+        BufferedReader bufferReader = new BufferedReader(reader);
+        String lineReader;
+        while((lineReader = bufferReader.readLine()) != null){
+            String parts[] = lineReader.split("\\|");
+            if(parts[2].equals(Storage.Instance().actualUser.getUsername())){
+                if(Integer.parseInt(parts[6]) == 1){
+                    message.setKeyMessage(parts[0]);
+                    message.setUserSend(parts[1]);
+                    message.setUserRecipe(parts[2]);
+                    message.setMessage(parts[3]);
+                    message.setDateMessage(parts[4]);
+                    message.setStatus(Integer.parseInt(parts[5]));
+                    message.setTypeMessage(Integer.parseInt(parts[6]));
+                    privateMessages.add(message);
+                    message = new MessageBean();
+                }
+            }
+        }
+    }
+    
+    public void setTextAreaPrivateMessages(){
+        String mensajes = "";
+        for(MessageBean message: privateMessages){
+            mensajes = mensajes + message.getUserSend() + ": "+ message.getMessage() + '\n';
+        }
+        txtPrivateMessages.setText(mensajes);
+    }
 }
