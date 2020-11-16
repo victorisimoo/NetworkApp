@@ -12,11 +12,17 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/victo/Documents/NetBeansProjects/NetworkApp/src/com/application/controllers/UserSearchController.java</file>
             <file>file:/C:/Users/victo/Documents/NetBeansProjects/NetworkApp/src/com/application/controllers/LoginController.java</file>
             <file>file:/C:/Users/victo/Documents/NetBeansProjects/NetworkApp/src/com/application/system/Principal.java</file>
             <file>file:/C:/Users/victo/Documents/NetBeansProjects/NetworkApp/src/com/application/controllers/NormalUserController.java</file>
             <file>file:/C:/Users/victo/Documents/NetBeansProjects/NetworkApp/src/com/application/controllers/CreateGropusController.java</file>
+=======
+            <file>file:/C:/Users/josed/Desktop/NetworkApp/src/com/application/controllers/CreateGropusController.java</file>
+            <file>file:/C:/Users/josed/Desktop/NetworkApp/src/com/application/controllers/DeleteGroupsController.java</file>
+            <file>file:/C:/Users/josed/Desktop/NetworkApp/src/com/application/controllers/ProfileSearchController.java</file>
+>>>>>>> de895219ff99dd3bcdb1b24734567c1eee9e4a05
         </group>
     </open-files>
 </project-private>
