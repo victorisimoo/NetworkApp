@@ -53,7 +53,7 @@ public class ProfileSearchController implements Initializable {
         
         try {
             pictureList = findUserPictures(lblUser.getText());
-            if (pictureList != null) {
+            if (pictureList.toArray().length != 0) {
                 Image image1 = new Image(new FileInputStream(pictureList.toArray()[0].toString()));
                 pbxImage.setImage(image1);
             }
@@ -105,7 +105,7 @@ public class ProfileSearchController implements Initializable {
     }
     
      public void nextPicture() throws FileNotFoundException{
-        if (counterPicture+1 <= pictureList.toArray().length && pictureList != null) {
+        if (counterPicture+1 <= pictureList.toArray().length && pictureList.toArray().length != 0) {
             ++counterPicture;
             Image image1 = new Image(new FileInputStream(pictureList.toArray()[counterPicture].toString()));
             pbxImage.setImage(image1);
@@ -113,7 +113,7 @@ public class ProfileSearchController implements Initializable {
     }
      
     public void previousPicture() throws FileNotFoundException{
-        if (counterPicture-1 >= 0 && pictureList != null) {
+        if (counterPicture-1 >= 0 && pictureList.toArray().length != 0) {
             --counterPicture;
             Image image1 = new Image(new FileInputStream(pictureList.toArray()[counterPicture].toString()));
             pbxImage.setImage(image1);
