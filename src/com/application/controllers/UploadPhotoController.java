@@ -72,7 +72,9 @@ public class UploadPhotoController implements Initializable {
         imagen.setRegister(photosTree.sizeTree());
         imagen.setLeft(-1);
         imagen.setRight(-1);
-        imagen.setPath(TFRoute.getText());
+        File file2 = new File(TFRoute.getText());
+        String path = "“C:\\MEIA\\imagenes\\"+file2.getName();
+        imagen.setPath(path);
         imagen.setDate("" + java.time.LocalDateTime.now());
         imagen.setStatus(1);
         imagen.setUser(Storage.Instance().actualUser.getUsername());
