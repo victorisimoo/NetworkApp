@@ -232,6 +232,10 @@ public class NormalUserController implements Initializable {
         escenarioPrincipal.ventanaAddFriendsToGroup();
     }
     
+    public void UploadPhoto() {
+        escenarioPrincipal.ventanaUploadPhoto();
+    }
+    
     public void ventanaMessage(){
         escenarioPrincipal.ventanaMessage();
     }

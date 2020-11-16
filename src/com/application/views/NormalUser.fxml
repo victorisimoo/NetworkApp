@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.controllers.NormalUserController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.controllers.NormalUserController">
    <children>
       <ImageView fx:id="imgProfile" fitHeight="126.0" fitWidth="113.0" layoutX="36.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -102,6 +102,7 @@
             <Font name="System Italic" size="12.0" />
          </font>
       </Label>
-      <Button fx:id="btnSearchFriend" layoutX="38.0" layoutY="455.0" mnemonicParsing="false" onAction="#openSearchProfile" style="-fx-background-color: #0095f6; -fx-cursor: hand;" text="Ver perfil de amigos" textFill="WHITE" />
+      <Button fx:id="btnSearchFriend" layoutX="38.0" layoutY="455.0" mnemonicParsing="false" onAction="#openSearchProfile" style="-fx-background-color: #0095f6; -fx-cursor: hand;" text="Ver perfil de usuarios" textFill="WHITE" />
+      <Button fx:id="uploadPhotos" layoutX="172.0" layoutY="455.0" mnemonicParsing="false" onAction="#UploadPhoto" prefHeight="23.0" prefWidth="100.0" style="-fx-background-color: #0095f6;" text="Subir fotos" textFill="WHITE" />
    </children>
 </AnchorPane>

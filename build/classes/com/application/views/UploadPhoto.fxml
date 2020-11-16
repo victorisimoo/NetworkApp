@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.controllers.UploadPhotoController">
+   <children>
+      <Button fx:id="btnSearch" layoutX="304.0" layoutY="89.0" mnemonicParsing="false" onAction="#uploadPicture" style="-fx-background-color: #0095f6;" text="Buscar" textFill="WHITE" />
+      <TextField fx:id="TFRoute" layoutX="146.0" layoutY="89.0" />
+      <Button fx:id="insertImage" layoutX="146.0" layoutY="125.0" mnemonicParsing="false" onAction="#insertImagen" prefHeight="26.0" prefWidth="209.0" style="-fx-background-color: #66bd2c;" text="Subir imagen" textFill="WHITE" />
+      <ImageView fx:id="imageView" fitHeight="192.0" fitWidth="233.0" layoutX="134.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true" />
+      <Line endX="100.0" layoutX="354.0" layoutY="64.0" startX="-186.0" />
+      <Label fx:id="lblName211" layoutX="47.0" layoutY="54.0" text="Sube una imagen">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnBack" layoutX="429.0" layoutY="349.0" mnemonicParsing="false" onAction="#back" text="Volver" />
+   </children>
+</AnchorPane>

@@ -11,6 +11,7 @@ import com.application.controllers.ProfileSearchController;
 import com.application.controllers.RegisterController;
 import com.application.controllers.SearchController;
 import com.application.controllers.SendMessageController;
+import com.application.controllers.UploadPhotoController;
 import com.application.controllers.UserSearchController;
 import java.io.InputStream;
 import javafx.application.Application;
@@ -151,6 +152,16 @@ public class Principal extends Application {
             e.printStackTrace();
         }
     }
+    
+     public void ventanaUploadPhoto(){
+        try {
+            UploadPhotoController UploadPhotoController = (UploadPhotoController) cambioEscena("UploadPhoto.fxml", 500, 400);
+            UploadPhotoController.setEscenarioPrincipal(this);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    
     
     public Initializable cambioEscena(String fxml, int ancho, int alto) throws Exception {
         Initializable resultado = null;

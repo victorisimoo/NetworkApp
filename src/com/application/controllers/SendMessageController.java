@@ -74,7 +74,7 @@ public class SendMessageController implements Initializable {
         if(txtSearchUser.getText()!= null){
             LoginController loginController = new LoginController();
             UserBean user = loginController.getCompleteUser(txtSearchUser.getText());
-            if((user != null) && (!user.getUsername().equals(Storage.Instance().actualUser.getUsername())) && (analyzeSearchUser(txtSearchUser.getText()))){
+            if((user != null) && (!user.getUsername().equals(Storage.Instance().actualUser.getUsername())) && (!analyzeSearchUser(txtSearchUser.getText()))){
                 lblError.setVisible(false);
                 pnUser.setVisible(true);
                 txtMessage.setDisable(false);
@@ -116,7 +116,7 @@ public class SendMessageController implements Initializable {
         String lineReader;
         while((lineReader = bufferReader.readLine()) != null){
             String parts[] = lineReader.split("\\|");
-            if(parts[1].equals(username) && (Storage.Instance().actualUser.getUsername().equals(parts[0]))){
+            if(parts[1].equals(username) && (Storage.Instance().actualUser.getUsername().equals(parts[0])) && parts[2].equals("1")){
                 return false;
             }
         }
@@ -130,7 +130,7 @@ public class SendMessageController implements Initializable {
         String lineReader;
         while((lineReader = bufferReader.readLine()) != null){
             String parts[] = lineReader.split("\\|");
-            if(parts[1].equals(username) && (Storage.Instance().actualUser.getUsername().equals(parts[0]))){
+            if(parts[1].equals(username) && (Storage.Instance().actualUser.getUsername().equals(parts[0]) && parts[2].equals("1"))){
                 return false;
             }
         }
